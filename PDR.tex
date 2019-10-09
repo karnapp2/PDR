@@ -1,0 +1,275 @@
+% !TeX program = pdflatex
+\documentclass[11pt, letterpaper,oneside]{memoir}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[USenglish]{babel}
+%\usepackage[english]{fancyref}  
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{stix}
+\usepackage{url}
+\usepackage{eso-pic}
+\usepackage{hyperref}
+\usepackage{footnotebackref}
+\usepackage[inline]{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{commath}
+\usepackage{dirtree}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage[newfloat]{minted}
+\usepackage{inconsolata}
+\usepackage{appendix}
+\usepackage{xparse}
+\usepackage{multirow}
+\usepackage{tikz}
+
+\usepackage{relsize,etoolbox}
+\AtBeginEnvironment{quote}{\small}
+
+%\usepackage{draftwatermark}
+%\SetWatermarkText{\sffamily RESTRICTED COPY}
+%\SetWatermarkScale{0.1}
+
+\usepackage{tablefootnote}
+\usepackage[acronym,shortcuts]{glossaries}
+
+\usepackage[numbers,sort&compress]{natbib}
+\setsecnumdepth{subsection}
+\settocdepth{subsection}
+\numberwithin{equation}{section}
+
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+%\usepackage{marvosym}
+\sisetup{load-configurations = abbreviations}
+
+\definecolor{dblue}{HTML}{145680}
+\definecolor{dred}{HTML}{801414}
+\definecolor{dgreen}{HTML}{148014}
+\definecolor{bgcode}{rgb}{0.95,0.95,0.95}
+\hypersetup{colorlinks = true,
+			citecolor=dgreen,
+			linkcolor=dblue,
+			urlcolor=dred}
+
+\bibliographystyle{unsrtnat}
+
+%\AddToShipoutPicture*{%
+%	\AtPageLowerLeft{\includegraphics[width=0.3\paperwidth,keepaspectratio,trim={{0.3\paperwidth} {0.2\paperwidth} 0 0},clip]{assets/navstar.pdf}}%
+%}
+
+\nonzeroparskip
+\setfloatadjustment{marginfigure}{\flushleftright}
+\setlength{\parindent}{0em}
+
+%% Theorem environments
+
+\newtheorem{problem}{Problem}%[section]
+\newtheorem{proposition}{Proposition}%[section]
+\newtheorem{theorem}{Theorem}%[section]
+\newtheorem{fact}{Fact}%[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}%[section]
+
+%% Document number
+
+\newcommand\docno{ISS/USLI-PDR}
+
+%% Restriction notice
+\newcommand\restrictiontype{UNLIMITED DISTRIBUTION}
+\newcommand\restrictiontext{%
+	\footnotesize {\bfseries \restrictiontype \ NOTICE}
+	
+	This report contains sensitive information that is to be used in a restrictive manner and has been issued as a Draft Handbook for early dissemination of its content to a limited audience. As a courtesy to the author and those involved in its publication, it should not be distributed until after any imposed restrictions have been relieved.}
+\newcommand\restrictionheadertext{%
+	{\bfseries RESTRICTED}
+}
+\newcommand\restrictionnotice{%
+	\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=south,yshift=10pt] at (current page.south) {\fbox{\parbox{\dimexpr\textwidth-\fboxsep-\fboxrule\relax}{\restrictiontext}}};
+	\end{tikzpicture}%
+}
+\newcommand\restrictionheader{%
+	\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=north,yshift=-20pt] at (current page.north) {\parbox{\dimexpr\textwidth-\fboxsep-\fboxrule\relax}{\restrictionheadertext}};
+	\end{tikzpicture}%
+}
+
+%% Epigraph
+
+\epigraphfontsize{\small\itshape}
+\setlength\epigraphwidth{11cm}
+\setlength\epigraphrule{0pt}
+
+%% Units
+
+\DeclareSIUnit\feet{ft}
+\DeclareSIUnit\knot{kt}
+\DeclareSIUnit\mile{mi}
+\DeclareSIUnit\inch{in}
+\DeclareSIUnit\pound{lb}
+\DeclareSIUnit\poundm{lbm}
+\DeclareSIUnit\poundf{lbf}
+\DeclareSIUnit\caliber{cal.}
+\DeclareSIUnit\fahrenheit{\degree F}
+
+%% Acronyms
+
+\makeglossaries
+
+\newacronym{tsg}{TSG}{Trajectory Shaping Guidance}
+\newacronym{cm}{CM}{Center of Mass}
+\newacronym{cfd}{CFD}{Computational Fluid Dynamics}
+\newacronym{iss}{ISS}{Illinois Space Society}
+\newacronym{pdr}{PDR}{Preliminary Design Review}
+\newacronym{zoh}{ZOH}{Zero-order Hold}
+\newacronym{moi}{MoI}{Moment of Inertia}
+\newacronym{toi}{ToI}{Tensor of Inertia}
+\newacronym{vtg}{VTG}{Virtual Target Guidance}
+\newacronym{aiz}{AIZ}{Admissible Impact Zone}
+\newacronym{iip}{IIP}{Instantaneous Impact Point}
+\newacronym{uav}{UAV}{Unmanned Aerial Vehicle}
+\newacronym{gdpp}{GDPP}{Generalized Dubins Path Problem}
+\newacronym{fts}{FTS}{Flight Termination System}
+\newacronym{tvc}{TVC}{Thrust Vector Control}
+\newacronym{nfz}{NFZ}{No-Fly Zone}
+
+% \vec to \mathbf
+\usepackage{bm}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+% dot product
+\makeatletter
+\newcommand*\dotp{\mathpalette\dotp@{.5}}
+\newcommand*\dotp@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+
+% sign function
+\DeclareMathOperator{\sign}{sgn}
+
+% maximum column size
+\setcounter{MaxMatrixCols}{12}
+
+% variable with reference coordinate and modifier
+\NewDocumentCommand{\cvar}{ O{A} o o m }{
+	\IfNoValueTF{#3}{
+		\IfNoValueTF{#2}{#4_{\text{#1}}}{#4^{(#2)}_{\text{#1}}}
+		}{
+		\IfNoValueTF{#2}{#4_{\text{#1}}}{#4^{(#2)}_{\text{#1},#3}}}
+}
+
+\NewDocumentCommand{\cvarnopar}{ O{A} o o m }{
+	\IfNoValueTF{#3}{
+		\IfNoValueTF{#2}{#4_{\text{#1}}}{#4^{#2}_{\text{#1}}}
+	}{
+		\IfNoValueTF{#2}{#4_{\text{#1}}}{#4^{#2}_{\text{#1},#3}}}
+}
+
+\NewDocumentCommand{\cvarnosup}{ O{A} o m }{
+	\IfNoValueTF{#2}{#3_{\text{#1}}}{#3_{\text{#1},#2}}
+}
+
+\NewDocumentCommand{\cvarnosub}{ O{A} o m }{
+	\IfNoValueTF{#2}{#3_{\text{#1}}}{#3^{#2}_{\text{#1}}}
+}
+
+%\makeevenfoot{headings}{}{\large\textbf{\restrictiontype}}{}
+%\makeoddfoot{headings}{}{\large\textbf{\restrictiontype}}{}
+%
+%\copypagestyle{chapter}{plain}
+%\makeevenhead{chapter}{}{\large\textbf{\restrictiontype}}{}
+%\makeoddhead{chapter}{}{\large\textbf{\restrictiontype}}{}
+
+\copypagestyle{titlingpage}{plain}
+
+%\makeevenhead{titlingpage}{\Large\textbf{\restrictiontype}}{}{}
+%\makeoddhead{titlingpage}{\Large\textbf{\restrictiontype}}{}{}
+
+\makeevenfoot{titlingpage}{}{}{}
+\makeoddfoot{titlingpage}{}{}{}
+
+%\makeevenhead{titlingpage}{\Large\textbf{\restrictiontype}}{}{\Large\textbf{COPY NO.}\hspace{0.1cm} \makebox[1.2cm]{\hrulefill}}
+%\makeoddhead{titlingpage}{\Large\textbf{\restrictiontype}}{}{\Large\textbf{COPY NO.}\hspace{0.1cm} \makebox[1.2cm]{\hrulefill}}
+
+%\makeevenfoot{titlingpage}{}{\Large\textbf{RESTRICTIONS APPLY}}{}
+%\makeoddfoot{titlingpage}{}{\Large\textbf{RESTRICTIONS APPLY}}{}
+
+\begin{document}
+	
+	% TITLE PAGE
+	
+	\begin{titlingpage}		
+		\raggedleft
+		
+		\rule{1pt}{\textheight}
+		\hspace{0.01\textwidth} % Whitespace between the vertical line and title page text
+		\parbox[b]{0.97\textwidth}{ % Paragraph box for holding the title page text, adjust the width to move the title page left or right on the page
+			
+			{\Large \texttt{\docno}\hfill\texttt{\bfseries DRAFT}}\\[5\baselineskip]
+			{\Huge Preliminary Design Review}
+			\\
+			{\Large In fulfillment of the NASA University Student Launch Initiative requirements}
+			\\[3\baselineskip]
+			
+			\begin{center}
+				\includegraphics[width=0.4\linewidth]{ISSlogo_square}\\
+				{\Large University of Illinois at Urbana-Champaign}\\[2\baselineskip]
+				{\Large\itshape Illinois Space Society (ISS)}\\[1\baselineskip]
+				{\large 104 S Wright Street}\\
+				{\large Urbana, Illinois 61801}
+			\end{center}
+			
+			
+			\vspace{0.2\textheight} % Whitespace between the title block and the publisher
+			\vfill
+			
+			%{\large\textit{Delft University of Technology, Faculty of Aerospace Engineering}}
+			{\noindent \today}\\[\baselineskip] % Publisher and logo
+		}
+		
+	\end{titlingpage}
+
+	\listoffigures
+	
+	\listoftables
+	
+	\clearpage
+	
+	\include{Acknowledgement}
+	
+	\printglossary[type=\acronymtype]
+	\addcontentsline{toc}{chapter}{Glossary}
+	
+	\newpage
+
+	\tableofcontents
+	
+	\include{Preface}
+	
+	\part{Summary}
+	
+	\part{Changes}
+	
+	\part{Launch Vehicle}
+	
+	\part{Payload}
+	
+	\include{PL_QuadrotorDynamicModel}
+	
+	\part{Safety}
+	
+	\part{Project Plan}
+ 	
+	\bibliography{sources.bib}
+	
+\end{document}
+
+

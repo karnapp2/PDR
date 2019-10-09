@@ -1,0 +1,450 @@
+\chapter{Quadrotor Dynamic Model}
+
+\section{Coordinate Systems}
+
+Let us consider the following four coordinate systems: \begin{enumerate*}[label=(\roman*), noitemsep]
+	\item inertial,
+	\item Earth-fixed,
+	\item instantaneous topocentric, and
+	\item body-fixed
+\end{enumerate*} \citep[pp.~3\textit{f.}]{Singh1975}. For these systems, the axes are defined as follows:
+
+\textit{Inertial system ($\text{O}$ at Earth center)}
+
+\begin{itemize}[noitemsep]
+	\item[\textbf{X}] On the Earth equatorial plane, pointing to the zero longitude at take-off
+	\item[\textbf{Y}] On the Earth equatorial plane, pointing to the \SI{90}{\degree} longitude at take-off
+	\item[\textbf{Z}] Perpendicular to the equatorial plane, pointing to the North Pole
+\end{itemize}
+
+\textit{Earth-fixed system ($\text{O}_\text{E}$ at Earth center)}
+
+\begin{itemize}[noitemsep]
+	\item[$\mathbf{X_E}$] On the Earth equatorial plane, always pointing to the Greenwich (\SI{0}{\degree}) longitude
+	\item[$\mathbf{Y_E}$] On the Earth equatorial plane, always pointing to the \SI{90}{\degree} longitude
+	\item[$\mathbf{Z_E}$] Perpendicular to the equatorial plane, pointing to the North Pole
+\end{itemize}
+
+\textit{Instantaneous topocentric system ($\text{O}_\text{T}$ at the projection point of the moving \gls{uav} on the Earth surface)}
+
+\begin{itemize}[noitemsep]
+	\item[$\mathbf{x_T}$] On the local horizon plane tangent to the instantaneous projection point of the \gls{uav}, directed along the local geocentric North
+	\item[$\mathbf{y_T}$] On the local horizon plane tangent to the instantaneous projection point of the \gls{uav}, directed along the local geocentric North
+	\item[$\mathbf{z_T}$] Perpendicular to the instantaneous tangent plane, directed along the geocentric radius vector and pointing toward the Earth center
+\end{itemize}
+
+\textit{Body-fixed system ($\text{O}_\text{B}$ at the center of gravity of the \gls{uav})}
+
+\begin{itemize}[noitemsep]
+	\item[$\mathbf{x_B}$] Along the \gls{uav} principle (longitudinal) axis, positive forward
+	\item[$\mathbf{y_B}$] Normal to the $x_B$--$z_B$ symmetric plane, completing the right-hand system
+	\item[$\mathbf{z_B}$] In the principle plane of symmetry of the \gls{uav}, perpendicular to the $x_B$ axis and positive downward
+\end{itemize}
+
+We will chiefly confine our discussion to the $O_T$ (instantaneous topocentric system) and $O_B$ (body-fixed) frames, as the distances the vehicle will travel allow for a flat Earth approximation with constant uniform gravity \citep{Burko2005}. Let us now consider the coordinate transformation between these two frames:
+
+\subsection{Coordinate Transformation}
+
+Let us define the following Euler angles:
+
+\begin{itemize}[noitemsep]
+	\item[$\boldsymbol{\theta}$] Pitch
+	\item[$\boldsymbol{\psi}$] Yaw
+	\item[$\boldsymbol{\phi}$] Roll
+\end{itemize}
+
+We then find the transformation from the instantaneous topocentric frame to the body-centric frame to be \citep[Eq.~2-2]{Kurak2018}:
+
+\begin{equation}
+\begin{split}
+	[R]_{T \rightarrow B} (\theta, \psi, \phi) &=
+	\begin{bmatrix}
+		1 & 0 & 0 \\
+		0 & \cos\phi & \sin\phi \\
+		0 & -\sin\phi & \cos\phi
+	\end{bmatrix}
+	\begin{bmatrix}
+		\cos\theta & 0 & -\sin\theta \\
+		0 & 1 & 0 \\
+		\sin\theta & 0 & \cos\theta
+	\end{bmatrix}
+	\begin{bmatrix}
+		\cos\psi & \sin\psi & 0 \\
+		-\sin\psi & \cos\psi & 0 \\
+		0 & 0 & 1
+	\end{bmatrix} \\
+	&= 
+	\begin{bmatrix}
+		\cos\theta \cos\psi & \cos\theta \sin\psi & -\sin\theta \\
+			\sin\theta \cos\psi \sin\phi - \sin\psi \cos\phi & \sin\theta \sin\psi \sin\phi + \cos\psi \cos\phi & \cos\theta \sin\phi \\
+			\sin\theta \cos\psi \cos\phi + \sin\psi \sin\phi & \sin\theta \sin\psi \cos\phi - \cos\psi \sin\phi & \cos\theta \cos\phi \\
+	\end{bmatrix}
+\end{split}
+\end{equation}
+
+Given the nature of the transformation matrix, it is readily found that:
+
+\begin{equation}
+	[R]_{B \rightarrow T} = [R]_{T \rightarrow B}^{-1} = [R]_{T \rightarrow B}^\intercal
+\end{equation}
+
+\section{Dynamic Model}
+
+Given the complex nature of the rotor-based \gls{uav}, we will make the following a priori assumptions to aid in the derivation of the vehicle model:
+
+\begin{enumerate}[noitemsep]
+	\item The \gls{uav} is a rigid body.
+	\item The \gls{toi} of the \gls{uav} is approximated as the \gls{moi} of several objects.
+	\item The \gls{cm} coincides with the \gls{uav}'s geometrical centroid.
+	\item The \gls{moi} of the propellers is neglected.
+	\item Time delay of commands is neglected.
+	\item Aerodynamic drag force is neglected.
+\end{enumerate}
+
+While most of the aforestated simplifications are intuitively sound, neglecting the aerodynamic drag force begs for justification. \citet{Castillo2017} provide the following approximation to the \gls{uav} drag force:
+
+\begin{equation}
+	\vec{f}_{d_k} = C_{D_k} \rho A_k V_k (V_{w_k} - V_k) \hat{\vec{k}}, \quad k: x_b, y_b, z_b 
+\end{equation} 
+
+Where $\hat{\vec{k}}$ is the unit vector in $\vec{k}$ direction, $A_k$ is the reference area by which the drag coefficient $C_{D_k}$ is determined in the $\vec{k}$-direction. $V_k$ and $V_{w_k}$ are the vehicle velocity and wind velocity in $O_B$, respectively, and $\rho$ is the air density, which is assumed to be constant. In this formulation, $C_{D_k}$ is to be determined through simulation (\gls{cfd}) or experiment. However, this poses a significant difficulty: the \gls{uav} consists of many distinct components with orientation and speed dependent drag characteristics, making the definition of a constant $C_{D_k}$ inadvisable. As a matter of fact, \citet{Castillo2017} treat the drag force as an unknown disturbance that is to be counteracted by the control system, thus warranting the term to be dropped.
+
+Let us define $\vec{T}$ and $\vec{H}$, the thrust force and hub torque for every motor--propeller system, respectively. Research shows that these forces scale with the square of the angular rate of the propellor \citep{Kurak2018, Castillo2017, Winslow2018, Bershadsky2016, Luukkonen2011}, i.e.:
+
+\begin{align}
+	T_i &= k_T \omega_i^2 \\
+	H_i &= k_H \omega_i^2
+\end{align}
+
+where $i$ denotes the $i$'th propeller, and we assume the propellers to be identical, yielding constant $k_T, k_H$. These coefficients can be found experimentally. Following the Newton--Euler approach presented by \citet{Kurak2018}, we find for a symmetric four-propeller \gls{uav} layout:
+
+\begin{align}
+	\ddot\phi &= \frac{\ell (T_2 - T_4) - (I_z - I_y) \dot\theta \dot\psi}{I_x} \\
+	\ddot\theta &= \frac{\ell (T_3 - T_1) - (I_x - I_z) \dot\phi \dot\psi}{I_y} \\
+	\ddot\psi &= \frac{(H_1 + H_3) - (H_2 + H_4) - (I_y - I_x)\dot\phi \dot\theta}{I_z} \\
+	\ddot x &= \frac{(\cos\phi \sin\theta \cos\psi + \sin\phi \sin\psi) \sum_{i=1}^{4} T_i}{m} \\
+	\ddot y &= \frac{(\cos\phi \sin\theta \sin\psi - \sin\phi \cos\psi) \sum_{i=1}^{4} T_i}{m} \\
+	\ddot z &= \frac{(\cos\phi \cos\theta) \sum_{i=1}^{4} T_i - m g}{m}
+\end{align}
+
+where $I_k = I_{kk}, k:x,y,z$ are the diagonal elements of the \gls{toi} $\vec{I}$, $\ell$ is the $L_2$-distance between the propeller and the origin of the $O_B$-frame ($\ell$ is constant to satisfy symmetry).
+
+\subsection{Nonlinear state space model}
+
+Let us define the following state variable:
+
+\begin{equation}
+	\begin{split}
+		\vec{x} = 
+		\begin{bmatrix}
+			\phi \\
+			\dot\phi \\
+			\theta \\
+			\dot\theta \\
+			\psi \\
+			\dot\psi \\
+			z \\
+			\dot z \\
+			x \\
+			\dot x \\
+			y \\
+			\dot y
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			x_1 \\
+			x_2 = \dot{x}_1 \\
+			x_3 \\
+			x_4 = \dot{x}_3 \\
+			x_5 \\
+			x_6 = \dot{x}_5 \\
+			x_7 \\
+			x_8 = \dot{x}_7 \\
+			x_9 \\
+			x_{10} = \dot{x}_9 \\
+			x_{11} \\
+			x_{12} = \dot{x}_{11} \\
+		\end{bmatrix}
+	\end{split}
+\end{equation}
+
+The force control input is then defined as:
+
+\begin{equation}
+	\vec{u}^* =
+	\begin{bmatrix}
+		\sum_{i=1}^{4} T_i \\
+		T_2 - T_4 \\
+		T_3 - T_1 \\
+		(H_1 + H_3) - (H_2 + H_4)
+	\end{bmatrix}
+\end{equation}
+
+Defining the angular rate control input as:
+
+\begin{equation}
+	\vec{u} = 
+	\begin{bmatrix}
+		\omega_1^2 \\ \omega_2^2 \\ \omega_3^2 \\ \omega_4^2 \\
+	\end{bmatrix}
+\end{equation}
+
+Using this definition, we find the force control input $\vec{u}^*$ to be related to the angular rate control input $\vec{u}$ as follows:
+
+\begin{equation}
+	\vec{u}^* =
+	\begin{bmatrix}
+		k_T & k_T & k_T & k_T \\
+		0 & k_T & 0 & - k_T \\
+		- k_T & 0 & k_T & 0 \\
+		k_H & - k_H & k_H & - k_H
+	\end{bmatrix}
+	\vec{u}
+\end{equation}
+
+Let us now define the following constants:
+
+\begin{align}
+	a_1 &= \frac{I_y - I_z}{I_x} && a_2 = \frac{I_z - I_x}{I_y} && a_3 = \frac{I_x - I_y}{I_z} \\
+	b_1 &= \frac{\ell}{I_x} &&b_2 = \frac{\ell}{I_y} &&b_3 = \frac{\ell}{I_3}
+\end{align}
+
+and the following rotations:
+
+\begin{equation}\label{eq:rotations}
+\begin{split}
+	r_t &= \cos\phi \cos\theta \\
+	r_x &= \cos\phi \sin\theta \cos\psi + \sin\phi \sin\psi \\
+	r_y &= \cos\phi \sin\theta \sin\psi - \sin\phi \cos\psi 
+\end{split}
+\end{equation}
+
+The nonlinear state space formulation is then found to be:
+
+\begin{equation}\label{eq:nonlinearss}
+	\dot{\vec{x}} =
+	\begin{bmatrix}
+		x_2 \\
+		x_4 x_6 a_1 + b_1 u^*_2 \\
+		x_4 \\
+		x_2 x_6 a_2 + b_2 u^*_3 \\
+		x_6 \\
+		x_2 x_4 a_3 + b_3 u^*_4 \\
+		x_8 \\
+		-g + r_t(x_1, x_3) u^*_1 / m \\
+		x_{10} \\
+		r_x(x_1, x_3, x_5) u^*_1 / m \\
+		x_{12} \\
+		r_y(x_1, x_3, x_5) u^*_1 / m 
+	\end{bmatrix}
+\end{equation}
+
+\subsection{Linearized state space model}
+
+Let us apply a small angle approximation on Eq.~\ref{eq:rotations}, giving:
+
+\begin{equation}\label{eq:rotationsSAM}
+\begin{split}
+	r_t &\approx 1 \\
+	r_x &\approx \theta \\
+	r_y &\approx \theta\psi - \phi \approx -\phi
+\end{split}
+\end{equation}
+
+To linearize Eq.~\ref{eq:nonlinearss}, we must find a suitable equilibrium point, where $\dot{\vec{x}} = \vec{0}$. This holds for:
+
+\begin{equation}
+\begin{split}
+	\bar{\vec{x}} &= \begin{bmatrix}
+		0 & 0 & 0 & 0 & 0 & 0 & \bar{x}_7 & 0 & \bar{x}_9 & 0 & \bar{x}_{11}
+	\end{bmatrix}^\intercal \\
+	\bar{\vec{u}}^* &= 
+	\begin{bmatrix}
+		mg & 0 & 0 & 0
+	\end{bmatrix}^\intercal
+\end{split}
+\end{equation}
+
+Linearizing Eq.~\ref{eq:nonlinearss} about $(\bar{\vec{x}}, \bar{\vec{u}}^*)$, we obtain:
+
+\begin{equation}
+\begin{split}
+	\vec{A} &= \eval[1]{\pd{\dot{\vec{x}}(\vec{x},\vec{u}^*)}{\vec{x}}}_{(\bar{\vec{x}}, \bar{\vec{u}}^*)} \\
+	\vec{B} &= \eval[1]{\pd{\dot{\vec{x}}(\vec{x},\vec{u}^*)}{{\vec{u}^*}}}_{(\bar{\vec{x}}, \bar{\vec{u}}^*)}
+\end{split}
+\end{equation}
+
+which yields the following state space formulation:
+
+\begin{equation} \label{eq:linearss}
+\begin{split}
+	\dot{\vec{x}} &=
+	\underbrace{
+	\begin{bmatrix}
+		0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+		0 & g & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+		-g & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+	\end{bmatrix}
+	}_{\vec{A}}
+	\vec{x}
+	+
+	\underbrace{
+	\begin{bmatrix}
+		0 & 0 & 0 & 0 \\
+		0 & b_1 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & b_2 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & b_3 \\
+		0 & 0 & 0 & 0 \\
+		1/m & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0
+	\end{bmatrix}
+	}_{\vec{B}^*}
+	\vec{u}^* \\
+	&= \vec{A} \vec{x}
+	+
+	\underbrace{
+	\begin{bmatrix}
+		0 & 0 & 0 & 0 \\
+		0 & b_1 k_T & 0 & -b_1 k_T \\
+		0 & 0 & 0 & 0 \\
+		-b_2 k_T & 0 & b_2 k_T & 0 \\
+		0 & 0 & 0 & 0 \\
+		b_3 k_H & -b_3 k_H & b_3 k_H & -b_3 k_H \\
+		0 & 0 & 0 & 0 \\
+		\frac{k_T}{m} & \frac{k_T}{m} & \frac{k_T}{m} & \frac{k_T}{m} \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+	\end{bmatrix}
+	}_{\vec{B}}
+	\vec{u}
+\end{split}
+\end{equation}
+
+\subsection{Discretization}
+
+Zero-order hold (ZOH) discretization of Eq.~\ref{eq:linearss}, gives for constant sampling time $h$:
+
+\begin{equation}
+\begin{split}
+	\vec{\Phi} &= e^{\vec{A} h} = 
+	\begin{bmatrix}
+		1 & h & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 1 & h & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 1 & h & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 1 & h & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+		0 & \frac{g h^2}{2} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & h & 0 & 0 \\
+		0 & g h & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+		-\frac{g h^2}{2} & -\frac{g h^3}{6} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & h \\
+		-g h & -\frac{g h^2}{2} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+	\end{bmatrix} \\
+	\vec{\Gamma} &= \int_0^h e^{\vec{A} s} \dif s \cdot \vec{B} =
+	\begin{bmatrix}
+		0 & \frac{1}{2} b_1 h^2 k_T & 0 & -\frac{1}{2} b_1 h^2 k_T \\
+		0 & b_1 h k_T & 0 & b_1 (-h) k_T \\
+		-\frac{1}{2} b_2 h^2 k_T & 0 & \frac{1}{2} b_2 h^2 k_T & 0 \\
+		b_2 (-h) k_T & 0 & b_2 h k_T & 0 \\
+		\frac{1}{2} b_3 h^2 k_H & -\frac{1}{2} b_3 h^2 k_H & \frac{1}{2} b_3 h^2 k_H &
+		-\frac{1}{2} b_3 h^2 k_H \\
+		b_3 h k_H & b_3 (-h) k_H & b_3 h k_H & b_3 (-h) k_H \\
+		\frac{h^2 k_T}{2 m} & \frac{h^2 k_T}{2 m} & \frac{h^2 k_T}{2 m} & \frac{h^2 k_T}{2 m} \\
+		\frac{h k_T}{m} & \frac{h k_T}{m} & \frac{h k_T}{m} & \frac{h k_T}{m} \\
+		0 & \frac{1}{6} b_1 g h^3 k_T & 0 & -\frac{1}{6} b_1 g h^3 k_T \\
+		0 & \frac{1}{2} b_1 g h^2 k_T & 0 & -\frac{1}{2} b_1 g h^2 k_T \\
+		0 & -\frac{1}{24} b_1 g h^4 k_T & 0 & \frac{1}{24} b_1 g h^4 k_T \\
+		0 & -\frac{1}{6} b_1 g h^3 k_T & 0 & \frac{1}{6} b_1 g h^3 k_T \\
+	\end{bmatrix}
+\end{split}
+\end{equation}
+
+with the following state space system:
+
+\begin{equation}
+	\vec{x}(k+1) = \vec{\Phi} \vec{x}(k) + \vec{\Gamma}\vec{u}(k)
+\end{equation}
+
+\section{Simulation}
+
+From \citet{Tayebi2004}, we adopt the following values for our simulation:
+
+\begin{table}[H]
+	\centering
+	\caption[Simulation parameters]{Simulation parameters \cite{Tayebi2004}}
+	\label{tab:tayebiparams}
+	\begin{tabularx}{.4\linewidth}{l X}
+		\toprule
+		\textbf{Parameter} & \textbf{Value} \\
+		\midrule
+		$g$ & \SI{9.81}{\meter\per\second\squared} \\
+		$m$ & \SI{0.468}{\kilo\gram} \\
+		$\ell$ & \SI{0.225}{\meter} \\
+		$k_T$ & \SI{2.980e-6}{(\radian\squared\per\second\squared)\per\newton} \\
+		$k_H$ & \SI{1.140e-7}{(\radian\squared\per\second\squared)\per\newton\meter} \\
+		$I_x$ & \SI{4.856e-3}{\kilo\gram\per\meter\squared} \\
+		$I_y$ & \SI{4.856e-3}{\kilo\gram\per\meter\squared} \\
+		$I_z$ & \SI{8.801e-3}{\kilo\gram\per\meter\squared} \\
+		\bottomrule \\
+	\end{tabularx}
+\end{table}
+
+Letting $h = \SI{1e-3}{\second}$, we obtain:
+
+\begin{equation}
+\begin{split}
+	\vec{\Phi} &= 
+	\begin{bmatrix}
+		1 & 0.001 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 1 & 0.001 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 1 & 0.001 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 1 & 0.001 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+		0 & 4.905\times10^{-6} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0.001 & 0 & 0
+		\\
+		0 & 0.00981 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+		-4.905\times10^{-6} & -1.635\times10^{-9} & 0
+		& 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0.001 \\
+		-0.00981 & -4.905\times10^{-6} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+		& 1 \\
+	\end{bmatrix} \\
+	\vec{\Gamma} &= 
+	\begin{bmatrix}
+		1 & 0.001 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 1 & 0.001 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 1 & 0.001 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 1 & 0.001 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+		0 & 4.905\times10^{-6} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0.001 & 0 & 0
+		\\
+		0 & 0.00981 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+		-4.905\times10^{-6} & -1.635\times10^{-9} & 0
+		& 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0.001 \\
+		-0.00981 & -4.905\times10^{-6} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+		& 1 \\
+	\end{bmatrix} 
+\end{split}
+\end{equation}

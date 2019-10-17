@@ -448,3 +448,72 @@ Letting $h = \SI{1e-3}{\second}$, we obtain:
 	\end{bmatrix} 
 \end{split}
 \end{equation}
+
+\section{Controller Design}
+
+This section details the controller setup and design for the \gls{uav}. We concern ourself chiefly with the servo problem, with path generation being delegated to the guidance law. Given the nature of the problem, we are forced to employ the \gls{lqr} methodology to tune the gains for this \gls{mimo} system.
+	
+\subsection{\gls{lqr} Tuning}
+
+Following the guidelines from \citep{Franklin2002}, we are to work with the following cost function:
+
+\begin{equation}
+	\mathcal{J} = \rho \vec{x}^\intercal \vec{H}_w^\intercal \overline{\vec{Q}}_1 \vec{H}_w \vec{x} + \vec{u}^\intercal \vec{Q}_2 \vec{u}
+\end{equation}
+
+where $\vec{Q}$ is a diagonal matrix containing elements that equal the inverse of the square of the maximum deviation of the states/inputs of interest. The value of $\rho$ is to be tuned by trial and error, considering the properties of the response.
+
+\paragraph{State weighting matrix.} Since we wish to have full state control with minimal deviations on every state, we will pose $\vec{H}_w = \vec{I}_{12}$. Given this choice of $\vec{H}_w$, we find $\overline{\vec{Q}}_1 = \vec{Q}_1$. We find $\overline{\vec{Q}}_1$ to be of the form:
+
+\begin{equation}
+	\overline{\vec{Q}}_1 =
+	\begin{bmatrix}
+		\Delta x_1^{-2} & 0 & \cdots & 0 \\
+		0 & \Delta x_2^{-2} & \ddots & \vdots \\
+		\vdots & \ddots & \ddots & 0 \\
+		0 & \cdots & 0 & \Delta x_{12}^{-2} 
+	\end{bmatrix}
+\end{equation}
+
+where the entries are tabulated in Tab.~\ref{tab:maximum state deviation}. The rationale behind the magnitude of these bounds lies in the mission objective of the \gls{uav}; we wish to accomplish minute maneuvering and near-stationary hovering with closely matching attitude and small slew rate. As can be seen from the values, we place a greater importance on the vertical ($z$-axis) motion, such that the vehicle can accomplish accurate terrain following and close-quarters operations close to the surface.
+
+\begin{table}[H]
+	\centering
+	\caption{Maximum state deviation values for use in the $\overline{\vec{Q}}_1$ matrix in the \gls{lqr} routine}
+	\label{tab:maximum state deviation}
+	\begin{tabularx}{.55\linewidth}{l l X}
+		\toprule
+		\textbf{State} & \textbf{Variable} & \textbf{Maximum state deviation} \\
+		\midrule
+		$\Delta x_1$ & $\phi$ & $\SI{2.5}{\degree} \approx \SI{4.36e-2}{\radian}$ \\
+		$\Delta x_2$ & $\dot\phi$ & $\SI{1.25}{\degree\per\second} \approx \SI{2.18e-2}{\radian\per\second}$ \\
+		$\Delta x_3$ & $\theta$ & $\SI{2.5}{\degree} \approx \SI{4.36e-2}{\radian}$ \\
+		$\Delta x_4$ & $\dot\theta$ & $\SI{1.25}{\degree\per\second} \approx \SI{2.18e-2}{\radian\per\second}$ \\
+		$\Delta x_5$ & $\psi$ & $\SI{5}{\degree} \approx \SI{8.73e-2}{\radian}$ \\
+		$\Delta x_6$ & $\dot\psi$ & $\SI{2.5}{\degree\per\second} \approx \SI{4.36e-2}{\radian\per\second}$ \\
+		$\Delta x_7$ & $z$ & $\SI{0.025}{\meter}$ \\
+		$\Delta x_8$ & $\dot z$ & $\SI{0.0125}{\meter\per\second}$ \\
+		$\Delta x_9$ & $x$ & $\SI{0.05}{\meter}$ \\
+		$\Delta x_{10}$ & $\dot x$ & $\SI{0.025}{\meter\per\second}$ \\
+		$\Delta x_{11}$ & $y$ & $\SI{0.05}{\meter}$ \\
+		$\Delta x_{12}$ & $\dot y$ & $\SI{0.025}{\meter\per\second}$ \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\paragraph{Control weighting matrix.} For the control input, we wish to minimize the use of excessive throttle. We can accomplish this by setting $\Delta u_i = 2^{-1/2} \omega^2_{\text{max}}$ for $i \in [1,4]$. This will translate to a maximum of $\pm 71\%$ throttle on each rotor, yielding a thrust cap at the \gls{rms} value of the maximum thrust, $T_{\text{cap}} = T_{\text{max}}/\sqrt{2}$, if we assume it to vary as a sinusoid. Similar to the state weighting matrix, the control weighting matrix will assume the form of:
+
+\begin{equation}
+	\begin{bmatrix}
+		\Delta u_1^{-2} & 0 & \cdots & 0 \\
+		0 & \Delta u_2^{-2} & \ddots & \vdots \\
+		\vdots & \ddots & \ddots & 0 \\
+		0 & \cdots & 0 & \Delta u_{4}^{-2} 
+	\end{bmatrix}
+\end{equation}
+
+Summarizing, we obtain the following cost function:
+
+\begin{equation}
+	\mathcal{J} = \rho \vec{x}^\intercal \vec{Q} \vec{x} + \vec{u}^\intercal \vec{Q}_2 \vec{u}
+\end{equation}

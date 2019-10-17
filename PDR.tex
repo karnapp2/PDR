@@ -28,6 +28,7 @@
 \usepackage{xparse}
 \usepackage{multirow}
 \usepackage{tikz}
+\usepackage{colortbl}
 
 \usepackage{relsize,etoolbox}
 \AtBeginEnvironment{quote}{\small}
@@ -218,38 +219,7 @@
 		
 	\end{titlingpage}
 
-	\listoffigures
-	
-	\listoftables
-	
-	\clearpage
-	
-	\include{Acknowledgement}
-	
-	\printglossary[type=\acronymtype]
-	\addcontentsline{toc}{chapter}{Glossary}
-	
-	\newpage
-
-	\tableofcontents
-	
-	\include{Preface}
-	
-	\part{Summary}
-	
-	\part{Changes}
-	
-	\part{Launch Vehicle}
-	
-	\part{Payload}
-	
-	\include{PL_QuadrotorDynamicModel}
-	
-	\part{Safety}
-	
-	\part{Project Plan}
- 	
-	\bibliography{sources.bib}
+	\input{Body}
 	
 \end{document}
 

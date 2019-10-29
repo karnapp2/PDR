@@ -1,0 +1,47 @@
+\chapter{Operational Protocols}
+
+Throughout the mission, the \gls{uav} will encounter a number of varied tasks that must be completed sequentially so as to satisfy the mission objectives. As such, it is natural to define a number of regimes in which the vehicle must operate, as these dictate the operational protocols that are to be effectuated. This chapter details these operational regimes, including the pertinent operational protocols. Specifically, the following regimes are identified and discussed in due detail:
+
+\begin{enumerate}[noitemsep, label=\Roman*.]
+	\item Transit \& Deployment
+	\item Descent
+	\item Loiter
+	\item Landing
+	\item Retrieval
+\end{enumerate}
+
+\section{Transit \& Deployment}
+
+Throughout stand-by, launch and passive descent, referred to as 'transit', the \gls{uav} will assume a low-power mode, periodically sending status updates and seeking connection with a ground station. This passive mode stems from multiple considerations. First, given the limited power supply, as much power as possible is to be saved will still maintaining a connection with the \gls{uav}. Second, by \gls{faa} regulations, the \gls{uav} may only be operated below \SI{400}{\feet} in \gls{los}\footnote{FAA Reauthorization Act of 2018 \S 346(b.2.C), 49 U.S.C. \S 44806} \citep{FederalAviationAdministration2018}. To ensure that no active operation takes place above this ceiling, the vehicle will restrict its operations by considering its current altimeter reading as a locking mechanism. This `altitude lock' constitutes the transit phase.
+
+From the FAA Reauthorization Act of 2018, the following pertinent regulations may be found. The \gls{uav} must have a gross weight under \SI{4.4}{\poundm}, and must be operated:
+
+\begin{enumerate}[noitemsep, label=(\roman*)]
+	\item within or beyond visual \gls{los} of the operator;
+	\item less than \SI{400}{\feet} above ground;
+	\item during daylight conditions;
+	\item within Class G airspace; and
+	\item outside of 5 statute miles from any airport, heliport, seaplane base, spaceport, or other location with aviation activities.
+\end{enumerate}
+
+Regarding points (iv) and (v), it is found that the closest airport is the Hazel Green airport. However, the launch site, Bragg Farms, is located outside of the Class E airspace, thus respecting the Class G airspace requirement  
+
+ Given the fact that the payload will only be deployed upon being granted permission from the \gls{rso}, it is of importance to achieve a timely response in the event of late notification. In addition, proper coordination with the avionics systems is of importance, as solenoid disengagement and winch lowering must be followed by \gls{uav} arm deployment in close succession\todo[author=HE]{Expand on deployment requirements (robustness, rapidity) and ground proximity considerations}. 
+ 
+\section{Descent}
+ 
+\todo[author=HE]{Expand on descent phase, including trade-offs between guidance algorithms ((N)MPC, GPC) and waypoint tracking vs. visual guidance at close proximity (CV).}
+
+\section{Loiter}
+
+\todo[author=HE]{Expand on loiter phase, highlighting energy efficiency and data acquisition (feature detection and path planning) during idle phase. Also detail what safety features must be incorporated into this phase (geofencing, no-fly zones have to default back to loiter).}
+
+\section{Landing}
+
+\todo[author=HE]{Expand on final approach and landing phase, including close-quarters operations and the role of computer vision in detecting the landing site, as well as the accuracy and terminal touch down conditions (velocity, attitude). Explain touch-and-go maneuvers in case of failed landing attempt.} 
+
+\section{Retrieval}
+
+\todo[author=HE]{Expand on retrieval protocol, including claw operations and validation of claw contents. Explain the details on distancing and safe idle mode after retrieval, as well as shutdown/hibernation routines.}
+
+ 

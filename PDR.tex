@@ -30,6 +30,7 @@
 \usepackage{tikz}
 \usepackage{colortbl}
 \usepackage[textsize=tiny]{todonotes}
+\usepackage{pifont}
 
 \usepackage{relsize,etoolbox}
 \AtBeginEnvironment{quote}{\small}
@@ -68,6 +69,17 @@
 \nonzeroparskip
 \setfloatadjustment{marginfigure}{\flushleftright}
 \setlength{\parindent}{0em}
+
+%% Table IDs
+
+\newcounter{IDnumbers}
+\newcommand\IDnumber{\stepcounter{IDnumbers}\arabic{IDnumbers}}
+\preto\tabular{\setcounter{IDnumbers}{0}}
+
+%% Assign commands to dings
+
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
 
 %% Theorem environments
 

@@ -1,0 +1,36 @@
+\chapter{Flight Dynamics}
+The primary responsibility of the Flight Dynamics team is to simulate the performance of both the launch vehicle and the payload, to inform other subteams of constraints that must be satisfied to achieve safe flight, and to make design decisions on all structures and control systems that directly influence the flight of the launch vehicle-payload system.
+
+\section{Simulation Methods}
+In order to ensure that predictions of flight performance, as well as insights into possible design improvements, are robust and well-informed, the team is using two independent simulation programs to study the flight profile. The team is principally using OpenRocket for simulating the flight of the launch vehicle and predicting critical mission characteristics such as apogee, time to apogee, and total flight time, among many others. However, in addition to OpenRocket, the Flight Dynamics team is developing its own custom-built rocket simulation software, Zenith Estimation through Numerical Integration and Tractable Heuristics (ZENITH). The team considered using other open-source rocket-simulating software, but found that none of them were as sophisticated or accessible as OpenRocket, hence the team decided to develop its own program.  
+
+\subsection{OpenRocket}
+OpenRocket is a powerful, open-source rocket flight simulation tool. As it is the most robust and informative, cost-free flight simulation tool available, the team is using it as the primary consultant on aerodynamic design considerations and predicting if the launch vehicle satisfies mission requirements. In addition to predicting flight trajectories, from launch to landing, for various possible initial conditions, OpenRocket also provides baseline estimates for the launch vehicles's mechanical and aerodynamic properties, including pre- and post-burnout masses, drag and lift coefficients, CP and CG locations, stability coefficient, and many others. 
+\subsection{ZENITH}
+Due to a lack of satisfactory alternatives to OpenRocket, and in an attempt to gain a valuable learning experience in simulation design and implementation, the team elected to develop its own simulation of the launch vehicle. ZENITH is a Python-based program that simulates the trajectory of a high-power rocket with specified dimensions, mass and moments of inertia, and thrust curve, by numerically integrating a set of differential equations of motion that govern it. Aerodynamic coefficients are obtained from a database called AeroDB, which calculates such coefficients based on the provided dimensions of the rocket (IS THAT RIGHT????).
+
+\section{Flight Profile}
+The flight profile for this mission features a relatively simple sequence of events.
+Nominally at apogee of 4,700ft (and within 2 seconds after apogee), an ejection charge
+in the tube coupler will separate the upper and lower body tubes and deploy the drogue parachute as displayed in Figure 19. This will be the only explosive separation event of
+the entire flight. The main parachute will then deploy at 800ft (this is above the minimum
+parachute deployment altitude of 500ft). Within two seconds of main parachute
+deployment, the solenoid system in the fairing will trigger after the necessary RSO
+permission is acquired, priming the drone for deployment. The drone will then deploy
+passively by pushing the nose cone off and sliding downward from the rocket. The nose
+cone will not have a parachute. The process for jettisoning the nosecone is described in
+Sec. 4.2.2.5.The flight profile was simulated in OpenRocket using a model of the rocket with numerous
+design specifications (e.g. material and motor type) and simulated it with various initial
+conditions, such as wind speed, launch angle and direction, as well as the launch
+coordinates. As mentioned in the previous section, current projections show the rocket to
+satisfy all requirements of flight performance, thus validating the current flight profile. If
+necessary, the flight profile can be adjusted to better accommodate these requirements;
+for example, the altitude of main parachute deployment can be lowered to ensure that the
+drift distance remains within the recovery area.
+
+\section{Simulation Results}
+\subsection{Kinetic Energy Predictions}
+\subsection{Drift Predictions}
+\subsection{Descent Time Predictions}
+
+\section{Simulation Discrepancies}

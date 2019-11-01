@@ -30,7 +30,13 @@
 
 	\section{Avionics}\label{PL:Design:Avionics}
 		\subsection{Flight Controller}
-			This is a filler paragraph
+		The team examined the benefits and drawbacks of each flight controller: the Navio2, the ArduPilot, and the Pixhawk. Factors such as size and mass were taken into account but had minimal effect on the decision-making process. All three boards are compact, light and of a sturdy build. The differences could easily be accounted for by minor tweaks in the payload’s structure. Due to the irrelevance of these factors, the decision process was based predominantly by the computational capabilities of the controllers. 
+
+		The ability to connect to the Raspberry Pi makes both the Pixhawk and the Navio2 more reliable than an individual ArduPilot due to the extensive experience that the drone community has with computer vision systems united with a Raspberry Pi. The ArduPilot was therefore eliminated as a viable option. 
+		
+		The Pixhawk and Navio2 were both viable controllers, each with their own benefits, such as higher reliability due to their communication with a Raspberry Pi and relatively easy computer vision integration because of the Raspberry Pi’s systems. One important difference between the Pixhawk and the Navio2 was how easy a computer vision system would be to manage. Although both systems have been used extensively for computer vision, the Pixhawk would require manual setup hardware-wise and with configuration files to establish a UART bridge. The Navio2, however, would require minimal setup due to its design including the Raspberry Pi as part of the flight controller. Both controllers would be able to provide the adequate amount of power that a computer vision guidance system would need, because of the Raspberry Pi’s high computing power and memory. 
+		
+		Ultimately, the Navio2’s reliability surpassed the Pixhawk’s because of the Navio2’s safer integration thanks to the extensive testing that third party organizations, such as Navio, have invested into their own products. These factors were all weighted accordingly in INSERT TABLE HERE. The Navio2 was therefore selected as the flight controller most fitting for the mission parameters. 
 
 		\subsection{Computer Vision}
 			This is a filler paragraph

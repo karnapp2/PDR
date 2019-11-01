@@ -1,15 +1,26 @@
 \chapter{Payload Design Tradeoffs}
 
-\section{Means of Securement}\label{PL:Tradeoffs:Securement}
-	\subsection{Locking Mechanism}
-		This is a filler paragraph
-		
+\section{Means of Securement}\label{PL:Tradeoffs:Securement}	
 	\subsection{UAV Arm Configuration}
 		\subsubsection{Parallel Unfolding Arms}
-			This is a filler paragraph
+			The team came up with two ideas for the structure of the UAV, both of which satisfied the compact structural requirements needed for this competition. The first idea was to have the arms of the UAV unfold in a spiral fashion. During the pre-deployment stage, the arms would assume an initial form folding parallel to the four sides of the body of the UAV. Four servos would then be used to rotate the arms outward. 
+		
+			One benefit of this structure is that the UAV would be more adaptable to different flying environments and possible motor failures. The unfolding process would also be actively controllable. While in the maximized allowed angle, which for the purpose of this competition’s flight would be 90°, the four arms would be held in place with the use of a locking mechanism called limit pin (insert the mechanism cad profile here). This locking design would ensure the flight stability and increase the overall structural integrity of the system. 
+
+			In spite of being very versatile when facing different circumstances, the foldable arm design had a few shortcomings that ultimately led the team to choose the latter design. As seen in FIGURE X, the most significant drawback of the side-folding arm structure was that the UAV size would need to be decreased by a considerable margin in order to fit the UAV body and the folded arms inside the body tube. This design would also require a decrease in the length of the arms compared to the upward-folding arm design. This could lead to a decrease in stability during flight. 
+		
+			Additionally, the pre-selected propeller would also have to decrease in size to accommodate the new dimension. This reduces efficiency and degrades flight time. A foldable design with the use of four servos would also result in a smaller PCB bay, which would lead to a decrease in battery size and therefore negatively affect the potential flight time. The UAV with the vertical folding arm structure can be seen below.
+		
 
 		\subsubsection{Vertically Unfolding Arms}
-			This is a filler paragraph
+			The top-down unfolding mechanism is the team’s second approach to create a compact UAV that could fit inside the pre-selected body tube dimension. With the mindset of designing a mechanically sound and simple unfolding mechanism, the team decided to place the arms that could be easily deployed through a well established mechanical system. A simpler approach involves certain compromises, but the team decided that the benefits of this design outweigh the potential downsides. 
+
+			This top down approach involves the use of a set of four hinge mechanisms, a set of springs and locking systems. With the lack of an active deployment strategy like the servos mentioned in the above section, the arms have to be deployed mechanically with the assistance of pre-stored potential energies from springs: preloaded strings will push the arms downward with the absence of constraints. One solution the team came up with is the use of four symmetrically placed low-friction aluminum guide rails that serve both as a guiding mechanism for the UAV deployment and as a horizontal constraint for the spring mechanism.
+	
+	\subsection{Locking Mechanism}
+		Once the UAV is free and the arms deploy to the open position, a series of pins are necessary to lock the arms in the proper X4 drone layout.  Once the arms get to a certain orientation,the locking pins will restrict the motion of the arms, locking them in place providing a better flight.  The locking pins on the UAV will operate using the internal tension of PLA to lock the arms in place.  As the arms are released form the guide rails, the pins will push on plastic, and as the plastic bends, and the pins reach the right location, the pla will snap back in place locking the arms’ position. 
+
+
 
 \section{Means of Deployment}\label{PL:Tradeoffs:Deployment}
 	The challenge posed to the team regarding the release of the payload is to deploy the UAV in the proper orientation for flight. The UAV requires a fast, consistent, and reliable release mechanism to deploy it from the rocket. During descent, the UAV will be deployed out of the top of the rocket as described below. 

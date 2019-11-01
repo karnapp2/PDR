@@ -16,6 +16,22 @@
 			The top-down unfolding mechanism is the team’s second approach to create a compact UAV that could fit inside the pre-selected body tube dimension. With the mindset of designing a mechanically sound and simple unfolding mechanism, the team decided to place the arms that could be easily deployed through a well established mechanical system. A simpler approach involves certain compromises, but the team decided that the benefits of this design outweigh the potential downsides. 
 
 			This top down approach involves the use of a set of four hinge mechanisms, a set of springs and locking systems. With the lack of an active deployment strategy like the servos mentioned in the above section, the arms have to be deployed mechanically with the assistance of pre-stored potential energies from springs: preloaded strings will push the arms downward with the absence of constraints. One solution the team came up with is the use of four symmetrically placed low-friction aluminum guide rails that serve both as a guiding mechanism for the UAV deployment and as a horizontal constraint for the spring mechanism.
+			            \begin{table}[]
+                \label{vertical unfolding arms}
+                {\footnotesize
+                \caption{Risk Matrix for Vertical Unfolding Arms}
+                \centering
+                \begin{tabularx}{\linewidth}{XXXlXl}
+                \toprule
+                \textbf{Risk}                                            & \textbf{Cause}                                                                                                                 & \textbf{Impact}                                                                                                                           & \textbf{RBM}  & \textbf{Mitigation}                                                                                                                                                                                     & \textbf{RWM} \\
+                \midrule
+                Incomplete arm deployment & Insufficient potential energy storage by the spring mechanism and misalignment of locking mechanism & Ranges from UAV flight failure and possible damage to the Avionics due to falling & \cellcolor{red!25} 1C & 1) Ensure to choose the right springs that can provide enough energy \newline 2) Making sure the locking mechanism is fully secured before launch \newline 3) Right material selection to prevent plastic deformation & \cellcolor{orange!25} 3C \\
+                Failure to completely deploy drone due to frictions created by the guide rails & Incorrect selection of springs and guide rail material that could generate enough friction force to prevent UAV deployment & Being unable to retrieve the “ice samples” and cause the incomplete of the mission & \cellcolor{red!25} 2B & 1) Conduct ample material analysis on the selection and choosing materials having the lowest friction such as steel or aluminum \newline 2) Conduct multiple rounds of testing before manufacturing & \cellcolor{green!25} 3D \\
+                Plastic deformation of the structure at joints & Strong forces from the spring loaded arms and gravity assisted arm deployment creating significant shearing and tension at joints & The falling or partial detachment of one or multiple arms causing potential crashing of UAV & \cellcolor{orange!25} 2D & 1) Create sufficient damping systems to mitigate the unfolding forces \newline 2) Using carbon fiber components that have strong tensile strengths & \cellcolor{green!25} 3E \\
+                \bottomrule
+                \end{tabularx}
+                }
+            \end{table}
 	
 	\subsection{Locking Mechanism}
 		Once the UAV is free and the arms deploy to the open position, a series of pins are necessary to lock the arms in the proper X4 drone layout.  Once the arms get to a certain orientation,the locking pins will restrict the motion of the arms, locking them in place providing a better flight.  The locking pins on the UAV will operate using the internal tension of PLA to lock the arms in place.  As the arms are released form the guide rails, the pins will push on plastic, and as the plastic bends, and the pins reach the right location, the pla will snap back in place locking the arms’ position. 

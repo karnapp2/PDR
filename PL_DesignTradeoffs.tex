@@ -202,3 +202,35 @@
 				\bottomrule
 			\end{tabularx}
 		\end{table}
+ \begin{table}[H]
+            \centering
+            \caption{Flight Controller Fact Sheet}
+            \label{tab: flight controller}
+            \begin{tabularx}{1\linewidth}{X X X X}
+                \toprule
+                Factor & ArduPilot & Pixhawk + RaspberryPi & Navio2 \\
+               \midrule
+                Size (mm) & 70.5 x 45 x 10 & 44 x 84 x 12 & 55 x 65 \\
+                Mass (g) & 31.0 & 15.8 & 23.0 \\
+                Ease of Integration & 8-bit processor requires aid of companion \mbox{computer} and several peripheral sensors & Requires configuration of linux files to set up UART bridge & Very easy due to extensively tested integration procedures\\
+                Power \newline consumption (W) & 0.5 & 3.6 & 2.79 \\
+                Reliability & No fall back option & Failures can occur in UART connection & Reliable integration due to 3rd-party product \mbox{design} \\
+                \bottomrule
+            \end{tabularx}
+        \end{table}
+        \begin{table}[H]
+            \label{Flight Controller}
+            {\footnotesize
+            \caption{Risk Matrix for the Flight Controller}
+            \centering
+            \begin{tabularx}{\linewidth}{XXXlXl}
+            \toprule
+            \textbf{Risk}                                            & \textbf{Cause}                                                                                                                 & \textbf{Impact}                                                                                                                           & \textbf{RBM}  & \textbf{Mitigation}                                                                                                                                                                                     & \textbf{RWM} \\
+            \midrule
+            UART bridge disconnects and stops communication & 1) High vibrations during launch and deployment interfere with physical connection.                                  & Complete loss of UAV control and inability to complete mission.                                                                 & \cellcolor{red!25} 2B  & 1) Mechanically secure physical connections of UART port using adhesives and 3D printed constraints. \newline 2) Surround ports with padding to ensure minimal movement.                               & \cellcolor{orange!25} 2D  \\
+            Battery failure leads to loss of power          & 1) High vibrations lead to battery disconnecting from flight controller. \newline 2) LiPo batteries overheat                   & 1) Complete loss of UAV control and inability to complete mission. \newline 2) Permanent damage to UAV structure and peripheral sensors. & \cellcolor{red!25} 2B  & 1) Mechanically secure physical connections of batteries using adhesives and 3D printed constraints. \newline 2) Monitor LiPo batteries carefully during pre-flight charging to prohibit overcharging. & \cellcolor{orange!25} 2D  \\
+            Noisy data is fed to control loop.              & Turbulence during flight causes instability for UAV airframe, resulting in control algorithms responding improperly. & 1) Unstable flight results in loss of sample from IRMA. \newline 2) UAV undergoes high-impact landing.                                & \cellcolor{orange!25} 2C  & 1) Use redundant instruments and low-pass filters to avoid collection of noisy data. \newline 2) Implement fail-safe system that instruct UAV to hover when turbulent flight modes occur.              & \cellcolor{orange!25} 2D \\
+            \bottomrule
+            \end{tabularx}
+            }
+        \end{table}

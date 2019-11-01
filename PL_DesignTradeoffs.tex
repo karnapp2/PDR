@@ -12,12 +12,27 @@
 			This is a filler paragraph
 
 \section{Means of Deployment}\label{PL:Tradeoffs:Deployment}
-	\subsection{UAV Release Mechanism}
-		\subsubsection{Launch Rails}
-			This is a filler paragraph
+	The challenge posed to the team regarding the release of the payload is to deploy the UAV in the proper orientation for flight. The UAV requires a fast, consistent, and reliable release mechanism to deploy it from the rocket. During descent, the UAV will be deployed out of the top of the rocket as described below. 
 
-		\subsubsection{Lowering Mechanism}
-			This is a filler paragraph
+	\subsection{Launch Rails}
+		The drone is secured within the rocket with guide rails. The retracted arms are connected to guide rails that hold the drone securely and will guide the drone out of the head of the rocket. The arms fold vertically as shown in the CAD models. Upon release, the drone will slide down the guide rails, out of the head, and the arms will flip open. This process must be controlled to ensure the drone comes out and deploys fully and in the correct orientation. A mechanism will be used to control the drones descent out of the rocket and ensure that the drone is ready before releasing it from the rocket.
+
+	\subsection{Lowering Mechanism}
+		To control the speed of the drone exiting the rocket, a lowering mechanism will be used to limit the speed. The mechanism can be either passively controlled through friction or actively controlled through a servo motor. The passive system relies on friction in the winch. 
+
+		One option is for a servo motor to tactically lower the UAV by an exact amount at an exact speed. The UAV can be accelerated and decelerated at the beginning and ending of its descent to ensure it doesn't experience extreme jerk. This will ensure the further safety of the UAV. Since only the descent of the UAV needs to be controlled, the motor does not need to be powerful. The motor can be geared to the speed necessary to deploy the UAV. However, the motor can fail. It requires electronic input and has more points of failure than a passive friction system.
+	
+		The passive system will eliminate the points of failure that arise from the use of a servo. The winch can be built with a specific resistance to restrict the acceleration of the drone as gravity pulls it out of the rocket. One benefit of this solution is that it will also keep costs down. However, this solution poses a larger threat to the safety of the drone. The drone will accelerate out of the rocket and may be traveling at a high velocity when the limit of the winch is reached. In this case, the drone could experience a large jerk, which could cause damage.The descent will also have less control, resulting in a less consistent deployment.
+	
+	\subsection{Lowering Mechanism Release System}
+		Once the UAV has been deployed outside of the rocket, the line attached to the winch must be disconnected. The team came up with three potential ways to accomplish this. The first option utilizes a sharp cutter attached to the UAV to sever the string. The second option uses a quick-release mechanism attached to the UAV to disconnect the line. Lastly, a nylon string could be attached to a winch and an electric connection could be used to burn through the nylon string. 
+
+		The cutter mechanism would require mechanical components and a motor to execute the operation. The design is simple, but will require care to ensure that the cutter will completely sever the string in all conditions, such as in both the presence and the absence of tension. 
+	
+		The quick-release mechanism is similar to the cutter mechanism. It will require a motor or similar mechanical source to pull a pin. The advantage of this system is that it does not depend on the line being cut. This also allows the line to be made of almost any material, including options more durable than nylon that do not cut easily. However, the quick-release would need to be designed carefully to ensure that it is not accidentally triggered before intended. The risk of premature triggering of the release is significant, and factors heavily into the team’s consideration of the viability of this option. 
+	
+		The electric system is a viable option for burning through nylon string. This system has no moving parts, which corresponds to less points of failure. It is the most reliable option. However, it will could longer to burn through the string than it might take to execute the other options. Additionally, this system limits the material for the string to nylon. 
+	
 
 	\subsection{Nose Cone Jettison}
 		\subsubsection{Without Parachute}

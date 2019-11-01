@@ -6,7 +6,7 @@ In order to ensure that predictions of flight performance, as well as insights i
 \\*
 \newline
 As another feature of its versatility, OpenRocket offers multiple customization options for running its trajectory simulations, such as various Earth models and time step size for the numerical integration. To confirm that the simulated trajectories are reliable, the team used two different Earth models, each with a different time step size. The simulation conditions the team used are summarized in the table below.
-\FloatBarrier
+% \FloatBarrier
 \begin{table}[H]
 \centering
  \caption{OpenRocket simulation conditions}
@@ -51,7 +51,7 @@ drift distance remains within the recovery area.
 As mentioned above, OpenRocket simulates mechanical properties of the launch vehicle in addition to its trajectory, based on the constructed model. The model constructed in OpenRocket includes all of the critical components that will be part of the final design; these include: payload, fairing and coupler avionics bays, and drogue and main parachutes. Based on this model, OpenRocket calculated the launch vehicle static stability margin to be 2.4, which satisfies the minimum required static stability margin of 2.0. The OpenRocket model is shown in the figure below.
 \begin{figure}[h]
 \centering
-    \includegraphics[width = 14cm, height = 7cm]{img/FIDO/openrocket_Model.pdf}
+    % \includegraphics[width = 14cm, height = 7cm]{img/FIDO/openrocket_Model.pdf}
     \caption{OpenRocket model of launch vehicle, with various points of interest highlighted.}
     \label{fig:my_label}
 \end{figure}   
@@ -119,10 +119,10 @@ As can be seen, the terminal kinetic energy of each component (under the assumpt
 
 \subsection{Drift and Apogee Predictions}
 The landing point of the launch vehicle is a critical safety concern to all parties and property in the area. To mitigate this risk, the team conducted several trajectory simulations for various wind speeds, launch angles, and simulation conditions. To visualize the drift, the trajectories were plotted on an in-plane graph, where the y-axis is north-south and the x-axis is east-west. The plots for the spherical Earth approximation condition are shown below.
-\FloatBarrier
+% \FloatBarrier
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm, height = 11cm]{img/FIDO/InPlaneDrift-1.png}
+    % \includegraphics[width = 15cm, height = 11cm]{img/FIDO/InPlaneDrift-1.png}
     \caption{Predicted in-plane drift for various wind speeds and launch angles (all under spherical Earth approximation condition)}
     \label{fig:my_label}
 \end{figure}
@@ -130,31 +130,31 @@ Note that, given the scaling of the north-south axis, the trajectories in each o
 \\*
 \newline
 For the sake of comparison, the team conducted the exact same simulations for the WGS84 condition. The resulting plots are shown below.
-\FloatBarrier
+% \FloatBarrier
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm, height = 11cm]{img/FIDO/InPlaneDriftWGS.pdf}
+    % \includegraphics[width = 15cm, height = 11cm]{img/FIDO/InPlaneDriftWGS.pdf}
     \caption{Predicted in-plane drift for various wind speeds and launch angles (all under WGS84 condition)}
     \label{fig:my_label}
 \end{figure}
-\FloatBarrier
+% \FloatBarrier
 While the WGS84 and spherical Earth approximation conditions predict slightly different drift trajectories, neither of them predict a maximum possible landing distance from the launch pad over 500m (about 1,640ft), thus both simulation conditions provide compelling evidence that the launch vehicle system will land within the recovery area radius.
 \\*
 \newline
 To determine the target apogee, the team also plotted the altitude data as a function of time from the same simulated trajectories.
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm, height = 11cm]{img/FIDO/VerticalTrajectory-1.png}
+    % \includegraphics[width = 15cm, height = 11cm]{img/FIDO/VerticalTrajectory-1.png}
     \caption{Simulated altitude as a function of time for various wind conditions and launch angles (spherical Earth approximation condition)}
     \label{fig:my_label}
 \end{figure}
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm, height = 11cm]{img/FIDO/VerticalTrajectoryWGS.pdf}
+    % \includegraphics[width = 15cm, height = 11cm]{img/FIDO/VerticalTrajectoryWGS.pdf}
     \caption{Simulated altitude as a function of time for various wind conditions and launch angles (WGS84 condition)}
     \label{fig:my_label}
 \end{figure}
-\FloatBarrier
+% \FloatBarrier
 As can be seen in the plots above, the spherical Earth approximation and WGS84 conditions predictions of apogee differ significantly, in some cases by over 200m (over 656ft). However, as discussed previously, the WGS84 simulation condition is expected to be more accurate because it is a more accurate Earth model with a smaller time step size. As a result, the team primarily based its target altitude decision on the WGS84 simulation condition. The team has determined its official target altitude to be 4,450ft.
 \begin{table}[H]
 \centering

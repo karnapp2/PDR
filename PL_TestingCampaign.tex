@@ -1,5 +1,7 @@
 \chapter{Testing Campaign}
 
+	This section outlines the various testing campaigns our team will preform on various aspects of the payload to ensure a maximum chance of mission success.
+
 \section{Structual Testing}\label{PL:Testing:Structural}
 	\subsection{Deployment Tests}
 	Primary structural members such as the carbon fiber tubes will be tested to failure in order to ensure their compliance with structural integrity requirements. A safety margin of 300 percent will be enforced on all load bearing members. Furthermore, mechanisms designed to actuate during the mission will be cycled repeatedly to verify that joints and hinges are not susceptible to wear. The passive deployment system of the arm revolves around the spring system being used to pull the arms from their resting position inside the rocket during ascent. However, the spring system must be calibrated correctly to ensure that the spring force is large enough to pull down  the arms while at the same time being small enough to not impede the deployment of the drone. As a result, many different spring configurations with varying spring forces will be tested to find the correct calibration. The spring forces will be adjusted by either choosing springs with different spring constants or varying their extension distances. 
@@ -30,10 +32,24 @@
 
 \section{Avionics Testings}\label{PL:Testing:Avionics}
 	\subsection{Flight Controller Tests}
-		This is a filler paragraph
+	The flight controller is the most important component of the vehicle’s guidance and control system. The team will be using a Nabio2 board that  interfaces with a Raspberry Pi which will be running an instance of the ArduPilot open source flight controller software. Although the ArduPilot framework is very widely used and is proven to be effective and reliable, multiple parameters must be precisely determined to ensure the drone is able to fly in a stable manner.
+
+	Before any flight tests can be done, the flight controller must be calibrated and configured correctly. The ArduPilot software incorporates built-in calibration procedures and health checks for all sensors and periphery. If any anomalous readings are detected, or if calibration is not successful, the software will notify the team through telemetry and will not allow arming of the motors. Once all sensors are calibrated, the motors will be armed and spun without any propellers mounted. Manually tilting the vehicle while armed should result in the motors varying in speed in an attempt to bring the vehicle’s attitude back to level with the horizon. If all motors are confirmed to produce the appropriate reactions, propellers can be mounted and a maiden flight of the drone can be conducted.
+	
+	The drone’s maiden flight will be done under the control of a human operator through an RC link. The purpose of the maiden flight shall be to verify the stability and controllability of the vehicle under manual control. During the flight, the telemetry feed will be under observation for any anomalous readings from sensors and GPS. If no anomalies are observed and the vehicle is deemed safely controllable, another flight will be made with the purpose of testing the flight controller’s autonomous capabilities.
+	
+	During this second flight, the vehicle will take off under manual control of a human operator. The flight controller will then be put into loiter mode which will attempt to maintain the drone’s position in space. If the vehicle is observed to be maintaining its position effectively, the flight controller will then be put into mission mode. In this mode, the vehicle will attempt to follow a predetermined set of waypoints, land autonomously, take off autonomously and travel to a different landing site at least 10 feet away. Data received through telemetry will be consistently observed for anomalous readings during this test mission. If no anomalies are detected and the vehicle accomplishes the test mission effectively, the flight controller will be considered to be working as intended.
+	
 
 	\subsection{Computer Vision Tests}
-		This is a filler paragraph
+	The team’s primary concern regarding the computer vision algorithm is the susceptibility of the algorithm to detect and track  a false target. As a failsafe, the UAV’s guidance algorithm will be configured to revert to GPS in the case of the computer vision algorithm failing to detect the retrieval site. However, a false detection could result in the vehicle’s descent being guided in the wrong direction, jeopardizing the chance of mission success.
+
+	In order to mitigate the risk of a false detection and incorrect guidance, the computer vision algorithm will undergo extensive testing and verification both on the ground and during flight. The sample retrieval sites are specified to be located within a 10 x 10 foot yellow tarp, however environmental conditions like the sun’s intensity,cloud cover, and general discontinuities will affect the exact gradient of yellow perceived by the onboard camera. Furthermore, a non overhead perspective will result in the square yellow tarp being perceived as trapezoid or a parallelogram by the algorithm.
+
+	To verify that the computer vision algorithm is not negatively affected by the aforementioned corner cases, the algorithm will be tested on static images emulating what the onboard camera would be capturing during flight. To further verify the algorithm’s robustness, the algorithm will run  during flight with no guidance input to the flight controller. This algorithm will instead record the images captured and the guidance output it is creating. This will allow the team to compare the output from the computer vision algorithm to the images taken by the onboard camera. If the algorithm’s output is congruent to the location of the sample site in the images, the team will progress onto the next phase of testing.
+
+	The final and most elaborate testing phase will involve allocating the computer vision system’s output to the guidance system. This allows the vehicle to be guided by the algorithm during descent onto the sample retrieval site. The test will be conducted with a human operator ready to override control of the vehicle remotely at any moment through an RC link. If the computer vision algorithm is able to effectively guide the UAV’s descent onto the retrieval site, it will be considered to be working as intended.
+
 
 
 

@@ -1,0 +1,74 @@
+\chapter{Payload Design Tradeoffs}
+
+\section{Means of Securement}\label{PL:Deployment:Securement}
+	\subsection{Locking Mechanism}
+		This is a filler paragraph
+		
+	\subsection{UAV Arm Configuration}
+		\subsubsection{Parallel Unfolding Arms}
+			This is a filler paragraph
+
+		\subsubsection{Vertically Unfolding Arms}
+			This is a filler paragraph
+
+\section{Means of Deployment}\label{PL:Deployment:Deployment}
+	\subsection{UAV Release Mechanism}
+		\subsubsection{Launch Rails}
+			This is a filler paragraph
+
+		\subsubsection{Lowering Mechanism}
+			This is a filler paragraph
+
+	\subsection{Nose Cone Jettison}
+		\subsubsection{Without Parachute}
+			This is a filler paragraph
+		
+		\subsubsection{With Parachute}
+			This is a filler paragraph
+
+\section{Payload Structures}\label{PL:Deployment:Structures}
+	\subsection{Landing Leg Design}
+		\subsubsection{Retractable Landing Mechanism}
+			This is a filler paragraph
+
+		\subsubsection{Static Landing Mechanism}
+			This is a filler paragraph
+
+	\subsection{Ice Retrieval and Mobility Agent}
+		\subsubsection{Pin Joint Mechanism}
+			The goal of the payload is to retrieve ten milliliters of ice and move the ice from one bucket to another. To achieve this, the team decided to construct a claw-like mechanism to scoop the ice from underneath the drone, close the claw, and drop the ice in the bucket at the destination. The design has a servo rotate a bolt with a nut without moving the bolt vertically. The nut then moves with respect to the bolt, thus opening the claw as the nut moves down. To close the claw, the nut moves up and the lever arm becomes horizontal, thus pushing the top of claw arm outward. The bottom of the claw will have a slanted shape to easier scoop ice pieces and lower the risk of pushing the ice pieces outwards. 
+
+			INSERT IMAGE HERE
+
+		\subsubsection{Sliding Pin Mechanism}
+			Another design the team is considering for the Ice Retrieval and Mobility Agent is a sliding pin mechanism. The sliding pin mechanism relies on the same movement of a nut sliding down a bolt to open and close the claws, but instead of a pin, it has slots that force the scooping mechanism to move out and in. To secure the scooping mechanism to the drone, two rods with pins at each end will be secured to the drone. The pin will connect the scooping mechanism to the rods and thus the drone. The figure shows the sliding pin mechanism closed (left) and open when the pin is near the top of the slot (right). 
+
+			INSERT IMAGE HERE
+
+		\subsubsection{Wormgear Mechanism}
+			This is a filler paragraph
+
+\section{Payload Avionics}\label{PL:Deployment:Avionics}
+	\subsection{Computer Vision}
+		\subsubsection{Algorithmic Approach}
+			This is a filler paragraph
+
+		\subsubsection{Deep Learning Approach}
+		The deep learning approach to using computer vision on the drone is to utilize neural networks. Neural networks can be used to detect and classify objects; they are used in various emerging technologies, such as self-driving cars and automatic facial recognition. 
+		Neural networks function by consecutively modeling small pieces of information and then combining them to form templates, and then finally weighing inputs with the templates to create a final prediction.
+		
+		During a training process, neural networks utilize algorithms that automatically find patterns in objects by evaluating external features of the object, such as color and structure, to divide objects into different classes. The process then updates weights, which correlate to the strength of association from an input image to the prediction, for the model and improves the performance every iteration. By doing so, it results in minimal error when evaluating the input images.
+		
+		For the competition, the process would require the team to feed the neural network images similar to that of the excavation area to “train” it to recognize what the excavation area would look like.These images would have labels and tags on them that identify each object. The neural network would analyze features such as the color of the boundary of the excavation area, and then update weights for the excavation area class. The same thing can be done with images of the “ice” sample that needs to be retrieved. Images with different amounts of ice can be input into the neural network to teach it the difference between areas with a high or low amount of ice concentration. Doing so would aid the drone in deciding the specific area it should retrieve the ice from.
+		
+		Neural networks have specific benefits and setbacks that need to be considered before choosing an approach to employ for computer vision. One useful benefit is that if the neural network is trained correctly, it can be extremely fast, and would be able to detect different objects accurately and reliably. On the other hand, a major setback to using a deep learning approach is the immense training time needed. The number of images needed to train the neural network to an adequate level is unknown, but could range from 1,000 to 100,000 comparison images, based on previous implementations.
+
+	\subsection{Flight Controller}
+		\subsubsection{ArduPilot}
+			This is a filler paragraph
+
+		\subsubsection{Pixhawk}
+			This is a filler paragraph
+
+		\subsubsection{Navio2}
+			This is a filler paragraph

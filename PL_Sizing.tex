@@ -1,0 +1,66 @@
+\chapter{Payload Sizing}
+
+One of the core tenets of the payload design, lies in proper sizing of the \gls{uav} so as to ensure that the mission requirements are satisfied with due confidence. As such, an informed sizing methodology is required, few of which may be found in the literature pertaining to \acrfullpl{mav}, the collective term for small \acrshortpl{uav}. This chapter outlines the various algorithms considered, as well as the limitations and results obtained from the algorithm of choice. In this treatment, a brief overview of the state of the art is presented, followed by a number of implementational considerations pertaining to the algorithm of choice. Finally, sizing results are presented, which will be referred back to over the course of the remainder of this document.
+
+\section{Sizing Algorithms}
+
+In recent literature, the topic of \gls{mav} sizing has been treated at a number of occasions, but not to the extent of aircraft sizing. \citet{Bershadsky2016} have developed the \gls{emst}, an online \gls{mav} sizing algorithm. While this methodology seems very promising in its ability to accurately size \acrshortpl{mav}, its implementation is not detailed in the aforementioned paper, and the online implementation has since been terminated.
+
+A more recent approach has been presented by \citet{Winslow2018}, which shows excellent correlation with a set of reference \acrshortpl{mav}. This approach rests on a series of parametric exponential equations that relate key inputs to component weight estimates as outputs. The approach presented in \citep{Winslow2018}, as is the case in the sizing approach proposed by \citet{Shastry2018}, draws heavily on results from \gls{bemt}. This requires a degree of \gls{cfd} to be implemented in the design loop, which was not regarded as a desirable property for the team's purposes. It was therefore sought to find tractable alternative that were less cumbersome in implementation, yet of higher fidelity. In particular, \gls{bemt} necessitates a two-dimensional \gls{cfd} code to be ran so as to obtain planar aerodynamic coefficients. Subsequently, these coefficients are integrated over the complete blade lengths in an element-wise fashion (hence the name \textit{blade element} momentum theory). A discussion regarding this decision follows below.
+
+\paragraph{Aerodynamic data.} A number of considerations have lead to the decision to employ manufacturer-provided experimental data, as opposed to either theoretical predictions or wind tunnel experiments. With reference to \gls{cfd}-based approaches, given the abundance of standardized low-speed propeller geometries, as well as associated wind tunnel measurements, it is natural to opt for physical results, as they bear more fidelity. If \gls{cfd} were to have been pursued, a number of simulation software packages would have substantially aided in design, where XFLR5\footnote{\url{http://www.xflr5.tech/xflr5.htm}} and Q-Blade\footnote{\url{http://q-blade.org/}} would have been the prime contenders. These codes, having been produced for low speed aerodynamics and wind turbine blades, respectively, do not perform well for rotors with small cord length and high angular velocity. In the presence of high Reynolds numbers and localized supersonicity, both of which are observed in the rotors under consideration, the underlying aerodynamic models (in this case, the ISES model) fail, as they do not account for compressibility or trans-/supersonic effects \citep{Drela1987}.
+
+Having discussed the drawbacks of computational methods, the two main experimental data sources can now be compared: wind tunnel data and motor-specific data. As for the first, there is a great wealth of low speed aerodynamic wind tunnel data that has been acquired as part of the work of Prof.~Selig's group at the University of Illinois \citep{Brandt2019}. This database provides high-fidelity aerodynamic coefficients for a wide variety of standardized propeller geometries, at different flow conditions and orientations. For these reasons, it would appear to be an excellent source of data for the purpose of sizing the \gls{uav}. However, to properly determine the required power system sizing and engines of choice, it is necessary to include existing motor--propeller combinations in the sizing algorithm. This mainly stems from the fact that different torques and levels of power consumption are experienced depending on both the motor and rotor choice, thereby necessitating either an implicit assumption regarding motor efficiency, or the use of existing empirical data supplied by manufacturers. In the interest of attaining a high-fidelity code, it was deemed more appropriate to utilize test data provided by manufacturers, and augment this as needed by means of the data from \citep{Brandt2019}. Having made this decision, it is now of importance to compile a list of reference motors for use in the subsequent trade-off study and optimization effort.
+
+\paragraph{Reference motor selection.} As mentioned before, a number of motors is to be selected for use in the sizing algorithm based on the methodology of \citet{Winslow2018}. In an attempt to maintain homogeneity of the test setup and data format across the various types of motors, it was quickly realized that selecting a single vendor would insure data integrity and equivalence to a greater degree, as opposed to mixing data. As such, SunnySky USA\footnote{\url{https://sunnyskyusa.com/}} was chosen as the prime vendor, given the quality of their test data and general data sheets, as well as past experience with the company. The following engines and propeller considerations have been implemented as part of the framework adapted from \citet{Winslow2018}:
+
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{l l X l}
+		\toprule
+		\textbf{Motor} & \textbf{Speed constant ($K_v$)} & \textbf{Propeller} & \textbf{Voltage} \\
+		\midrule
+		\textit{\href{https://sunnyskyusa.com/collections/x-motors/products/sunnysky-x2302}{SunnySky X2302 V3}} & 1500/1650 & {GWS8043}, {GWS8060}, {GWS9050} & {7.4}/{8.4} \\
+		\midrule
+		\multirow{3}{*}{\textit{\href{https://sunnyskyusa.com/collections/x-motors/products/sunnysky-x2304-v3}{SunnySky X2304 V3}}} & 1400 & {GWS8043}, {GWS8060}, {GWS9050}, {GWS1047} & {7.4}/{8.4} \\
+		\cmidrule(l){2-4}
+		& 1480 & {GWS8043}, {GWS8060}, {GWS9047}, {GWS9050} & {7.4}/{8.4} \\
+		\cmidrule(l){2-4}
+		& 1800 & {GWS8043}, {GWS8060}, {GWS9047}, {GWS9050} & {7.4}/{8.4} \\
+		\midrule % X2212 V3
+		\multirow{6}{*}{\textit{\href{https://sunnyskyusa.com/collections/x-motors/products/sunnsky-x2212}{SunnySky X2212 V3}}} & \multirow{2}{*}{980} & {APC9045}, {APC9047}, {APC1038}, {APC1047} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC8038}, {APC9045}, {APC9047}, {APC1047} & 14.8 \\
+		\cmidrule(l){2-4}
+		& \multirow{2}{*}{1250} & {APC8060}, {APC9045}, {APC9047}, {APC9060} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC8060} & 14.8 \\
+		\cmidrule(l){2-4}
+		& \multirow{2}{*}{1400} & {APC7060}, {APC8038}, {APC8060}, {APC9045}, {APC9047} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC7060} & 14.8 \\
+		\midrule % X2216 V3
+		\multirow{6}{*}{\textit{\href{https://sunnyskyusa.com/collections/x-motors/products/sunnysky-x2216}{SunnySky X2216 V3}}} & \multirow{2}{*}{880} & {APC9045}, {APC1047}, {APC1147} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC8038}, {APC9045}, {APC9060}, {APC1047} & 14.8 \\
+		\cmidrule(l){2-4}
+		& \multirow{2}{*}{950} & {APC9045}, {APC1047}, {APC1147} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC9045}, {APC9060}, {APC1047} & 14.8 \\
+		\cmidrule(l){2-4}
+		& \multirow{2}{*}{1100} & {APC9045}, {APC9047}, {APC9060}, {APC1047}, {APC1147} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC8060}, {APC9045}, {APC9047}, {APC9060} & 14.8 \\
+		\cmidrule(l){2-4}
+		& \multirow{2}{*}{1250} & {APC9045}, {APC9047}, {APC9060}, {APC1047}, {APC1147} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC8060} & 14.8 \\
+		\cmidrule(l){2-4}
+		& \multirow{2}{*}{1400} & {APC8060}, {APC9045}, {APC9047}, {APC9060} & 11.1 \\
+		\cmidrule(l){3-4}
+		& & {APC7060}, {APC8060} & 14.8 \\
+		\cmidrule(l){2-4}
+		\bottomrule
+	\end{tabularx}
+\end{table}
+

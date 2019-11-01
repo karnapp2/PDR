@@ -87,8 +87,33 @@ In order to provide additional redundancy, the team decided to include two TeleM
     \end{tabularx}%
     \label{tab:Avionics:FMEA}%
   \end{table}%
-
-
+  \begin{table}[htbp]
+    \centering
+    \caption{Add caption}
+    \begin{tabularx}{\linewidth}{X l X}
+  \cmidrule{1-1}\cmidrule{3-3}    \rowcolor[rgb]{ 1,  0,  0} {\textcolor[rgb]{ 1,  1,  1}{\textbf{Failure Modes}}} &{\textcolor[rgb]{ 1,  1,  1}{\textbf{RAC}}} & \textcolor[rgb]{ 1,  1,  1}{\textbf{Mitigation approach}} \\
+  \cmidrule{2-3}    \textbf{E-match system failure} & \textbf{1E} & Risk is minimized by using ematches in quadruply redundant system. \\
+      \midrule
+      \rowcolor[rgb]{ 1,  .882,  .8} \textbf{Either parachute deploys prematurely in flight} & \textbf{2E} & The deployment system will be tested prior to launch, and feature reliable components.  \\
+      \midrule
+      \textbf{Either parachute deploys prematurely on launch pad} & \textbf{1E} & A mechanical arming switch will be installed that interrupts the system's access to power to ensure that the black powder charges deploy.  \\
+      \midrule
+      \rowcolor[rgb]{ 1,  .882,  .8} \textbf{Altimeter brown or black-out} & \textbf{2D} & The system will be designed to be tolerant to power loss. Specifically, the stratologger was selected to because of its two second brown out protection \\
+      \midrule
+      \textbf{Communications failure} & \textbf{3D} & The communication system will use commericially available radios with specifications that far exceed the required range and throughput. The system will be shielded against electromagnetic interference, and the radios will operate on clear channels. \\
+      \midrule
+      \rowcolor[rgb]{ 1,  .882,  .8} \textbf{Short circuit in the avionics system} & \textbf{3D} & The team will perform exahustive testing of avionics systems before use in rocket. The team will also use multimeters to check for short circuits or ground faults.  \\
+      \midrule
+      \textbf{Battery failure (excluding altemeters)} & \textbf{1D} & The team will use a multimeter to inspect the batteries and additional testing of avionics systems before final use. The batteries will be sized appropriately with a large tolerance to ensure that launch delays do not impact the rocket. \\
+      \midrule
+      \rowcolor[rgb]{ 1,  .882,  .8} \textbf{Disconnection of soldered connections, caused by flight and launch forces.} & \textbf{3C} & The team will ensure that solder joints are secured, and is investigating the use of a PCB which would strongly mitigate the risk. \\
+      \midrule
+      \textbf{Damage to the circuit board due to launch forces} & \textbf{2D} & The circuit board will have the necesitated structural integrity to not be damaged due to flight forces. Moreover, the team will avoid over burdening the connections with large components. \\
+      \bottomrule
+      \end{tabularx}%
+    \label{tab:addlabel}%
+  \end{table}%
+  
 
   
 

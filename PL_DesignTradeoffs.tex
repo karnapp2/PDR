@@ -74,3 +74,20 @@
 
 		\subsubsection{Navio2}
 			The Navio2 is slightly different from the Pixhawk and ArduPilot APM; it requires a Raspberry Pi to function. The Navio2 itself is just a shield containing high resolution sensors, a UART interface and a GNSS receiver that fits onto a Raspberry Pi. This combined system coalesces to become the flight controller. A set up like this removes the need to carry an extra companion computer in addition to the flight controller because the flight controller system itself has a high power, 64-bit, 1.5 GHz processor on the Raspberry Pi which can handle the processing needs for the computer vision system.
+
+		\begin{table}[H]
+			\centering
+			\caption{Flight Controller Fact Sheet}
+			\label{tab: flight controller}
+			\begin{tabularx}{1\linewidth}{X X X X}
+				\toprule
+				Factor & ArduPilot & Pixhawk + RaspberryPi & Navio2 \\
+			   \midrule
+			   	Size (mm) & 70.5 x 45 x 10 & 44 x 84 x 12 & 55 x 65 \\
+				Mass (g) & 31.0 & 15.8 & 23.0 \\
+				Ease of Integration & 8-bit processor requires aid of companion \mbox{computer} and several peripheral sensors & Requires configuration of linux files to set up UART bridge & Very easy due to extensively tested integration procedures\\
+				Power \newline consumption (W) & 0.5 & 3.6 & 2.79 \\
+				Reliability & No fall back option & Failures can occur in UART connection & Reliable integration due to 3rd-party product \mbox{design} \\
+				\bottomrule
+			\end{tabularx}
+		\end{table}

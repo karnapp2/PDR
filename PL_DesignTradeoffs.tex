@@ -156,6 +156,24 @@
 		
 			Neural networks have specific benefits and setbacks that need to be considered before choosing an approach to employ for computer vision. One useful benefit is that if the neural network is trained correctly, it can be extremely fast, and would be able to detect different objects accurately and reliably. On the other hand, a major setback to using a deep learning approach is the immense training time needed. The number of images needed to train the neural network to an adequate level is unknown, but could range from 1,000 to 100,000 comparison images, based on previous implementations.
 
+ \begin{table}[]
+                \label{computer vision}
+                {\footnotesize
+                \caption{Risk Matrix for Computer Vision}
+                \centering
+                \begin{tabularx}{\linewidth}{XXXlXl}
+                \toprule
+                \textbf{Risk}                                            & \textbf{Cause}                                                                                                                 & \textbf{Impact}                                                                                                                           & \textbf{RBM}  & \textbf{Mitigation}                                                                                                                                                                                     & \textbf{RWM} \\
+                \midrule
+                Algorithm does not recognize excavation site & 1) Incorrect implementation of logic in algorithm relating to classification of excavation sites \newline 2) Not enough images classifying excavation sites are fed to train the neural network to a reliable state & UAV does not navigate to excavation site with complete accuracy & \cellcolor{red!25} 2A & 1) Conduct extensive testing to ensure that algorithm recognizes excavation site accurately and reliably \newline 2) Algorithm reverts to GPS based positioning to navigate to excavation area if excavation site is not recognized. & \cellcolor{green!25} 3D \\
+                Algorithm falsely detects an excavation area & 1) Incorrect implementation of logic in algorithm relating to differentiation between excavation sites \newline 2) Not enough images are fed to train the neural network reliably & UAV fails to navigate to correct excavation site and flies to wrong site instead & \cellcolor{red!25} 2A & 1) Conduct extensive testing to ensure that algorithm recognizes excavation site accurately and reliably without detecting incorrect sites \newline 2) Algorithm is manually reverted to GPS based positioning to navigate to correct excavation area & \cellcolor{orange!25} 3C \\
+                Algorithm does not run at all or runs slowly & 1) Flight computer is disconnected from power source \newline 2) Algorithm is inefficient through redundant computation or overuse of storage & UAV is not able to recognize and navigate to the excavation site & \cellcolor{orange!25} 2C & 1) Ensure UAV is connected securely to power source, and is able to stay secured during flight \newline 2) Test algorithm during flight to ensure it does not overuse processing power or storage & \cellcolor{green!25} 2E \\
+                Algorithm causes Raspberry Pi to malfunction & 1) Algorithm encounters stimulus outside of its training bounds \newline 2) Inaccurate data is fed to algorithm during flight. & UAV malfunctions and loses ability to stay aloft & \cellcolor{red!25} 1C & 1) Conduct extensive testing and identify when Raspberry Pi malfunctions \newline 2) Identify edge cases that may cause malfunctions and account for them in algorithmic approach \newline 3) Catch errors in runtime and deal with accordingly to maintain mission feasibility & \cellcolor{green!25} 1E \\
+                \bottomrule
+                \end{tabularx}
+                }
+            \end{table}
+	    
 	\subsection{Flight Controller}
 		From the multitude of different flight controllers available that would suit the mission parameters, the team was able to narrow the list down to 3 choices. These flight controllers, the ArduPilot APM, the Pixhawk 4 and the Navio2, are all widely used by the UAV community. The team identified the factors that were most pertinent to the mission and weighted them by their importance. Ultimately, the flight controller in tandem with its companion computer would require the adequate processing power for the computer vision system and a high degree of reliability, which often varies depending upon software or physical design.
 

@@ -1,15 +1,12 @@
-\chapter{Payload Deployment}
+\chapter{Payload Requirements}
 
 During the boost, coast, and the majority of the launch vehicle's flight, the payload will remain idle and securely fixed in the payload bay. This chapter will detail the means of securement and deployment of the payload, as well as a trade-off between the various means that have been consider to arrive at the leading design.
 
 This chapter will be structured as follows: Sec.~\ref{PL:Deployment:Requirements} details the requirements the payload is to satisfy given the overall mission and top-level requirements, followed by a trade-off study regarding the means of securement in Sec.~\ref{PL:Deployment:Securement}, as well as the possible deployment modes in Sec.~\ref{PL:Deployment:Deployment}. Finally, the leading design is presented in Sec.~\ref{PL:Deployment:LeadingDesign} in reference to the foregoing trade-off studies.
 
-
-\section{Requirements}\label{PL:Deployment:Requirements}
-
 This section details the various requirements to which the payload deployment scheme must abide. Specifically, two forms of requirements are identified: top-level requirements and team-derived requirements. The first are requirements either imposed by the competition, or legislation that is in effect at the time of launch and operations. The second form of requirements pertain to what the team perceives to be of importance in assuring mission success and robustness.
 
-\subsection{Top-level requirements}
+\section{Top-level requirements}
 
 The top-level requirements for the payload deployment are outlined in Secs. 4.3--4 of \citep{MSFC2019}, reading as follows:
 
@@ -58,9 +55,9 @@ As a supplement to these regulations, an aeronautical chart of the surroundings 
 
 In this chart, the Class E airspace is bounded by a vignette magenta border, and spans down to \SI{700}{\feet}; anything below that is Class G airspace, and thus open for \gls{uav} operations. Incidentally, the area of payload operations lies beyond a 5 mile radius of the closest airfield.
 
-\subsection{Team-derived requirements}
+\section{Team-derived requirements}
 
-In addition to the above, a number of additional requirements have been compiled by the team. In particular, the robustness of the securement system, as well as the reliability of the deployment system are at the center of the discussion\todo[author=HE]{Draft team-derived requirements}.
+In addition to the above, a number of additional requirements have been compiled by the team. In particular, the robustness of the securement system, as well as the reliability of the deployment system are at the center of the discussion.
 
 \begin{enumerate}[noitemsep, label=\arabic*.]
 	\item Deployment
@@ -140,110 +137,3 @@ In addition to the above, a number of additional requirements have been compiled
 		\end{enumerate}
 	\end{enumerate}
 \end{enumerate}
-
-\section{Means of Securement}\label{PL:Deployment:Securement}
-	\subsection{Locking Mechanism}
-		This is a filler paragraph
-		
-	\subsection{UAV Arm Configuration}
-		\subsubsection{Parallel Unfolding Arms}
-			This is a filler paragraph
-
-		\subsubsection{Vertically Unfolding Arms}
-			This is a filler paragraph
-
-\section{Means of Deployment}\label{PL:Deployment:Deployment}
-	\subsection{UAV Release Mechanism}
-		\subsubsection{Launch Rails}
-			This is a filler paragraph
-
-		\subsubsection{Lowering Mechanism}
-			This is a filler paragraph
-
-	\subsection{Nose Cone Jettison}
-		\subsubsection{Without Parachute}
-			This is a filler paragraph
-		
-		\subsubsection{With Parachute}
-			This is a filler paragraph
-
-\section{Payload Structures}\label{PL:Deployment:Structures}
-	\subsection{Landing Leg Design}
-		\subsubsection{Retractable Landing Mechanism}
-			This is a filler paragraph
-
-		\subsubsection{Static Landing Mechanism}
-			This is a filler paragraph
-
-	\subsection{Ice Retrieval and Mobility Agent}
-		\subsubsection{Pin Joint Mechanism}
-			This is a filler paragraph
-
-		\subsubsection{Sliding Pin Mechanism}
-			This is a filler paragraph
-
-		\subsubsection{Wormgear Mechanism}
-			This is a filler paragraph
-
-\section{Payload Avionics}\label{PL:Deployment:Avionics}
-	\subsection{Computer Vision}
-		\subsubsection{Algorithmic Approach}
-			This is a filler paragraph
-
-		\subsubsection{Deep Learning Approach}
-		The deep learning approach to using computer vision on the drone is to utilize neural networks. Neural networks can be used to detect and classify objects; they are used in various emerging technologies, such as self-driving cars and automatic facial recognition. 
-		Neural networks function by consecutively modeling small pieces of information and then combining them to form templates, and then finally weighing inputs with the templates to create a final prediction.
-		
-		During a training process, neural networks utilize algorithms that automatically find patterns in objects by evaluating external features of the object, such as color and structure, to divide objects into different classes. The process then updates weights, which correlate to the strength of association from an input image to the prediction, for the model and improves the performance every iteration. By doing so, it results in minimal error when evaluating the input images.
-		
-		For the competition, the process would require the team to feed the neural network images similar to that of the excavation area to “train” it to recognize what the excavation area would look like.These images would have labels and tags on them that identify each object. The neural network would analyze features such as the color of the boundary of the excavation area, and then update weights for the excavation area class. The same thing can be done with images of the “ice” sample that needs to be retrieved. Images with different amounts of ice can be input into the neural network to teach it the difference between areas with a high or low amount of ice concentration. Doing so would aid the drone in deciding the specific area it should retrieve the ice from.
-		
-		Neural networks have specific benefits and setbacks that need to be considered before choosing an approach to employ for computer vision. One useful benefit is that if the neural network is trained correctly, it can be extremely fast, and would be able to detect different objects accurately and reliably. On the other hand, a major setback to using a deep learning approach is the immense training time needed. The number of images needed to train the neural network to an adequate level is unknown, but could range from 1,000 to 100,000 comparison images, based on previous implementations.
-
-	\subsection{Flight Controller}
-		\subsubsection{ArduPilot}
-			This is a filler paragraph
-
-		\subsubsection{Pixhawk}
-			This is a filler paragraph
-
-		\subsubsection{Navio2}
-			This is a filler paragraph
-
-\section{Leading Design}\label{PL:Deployment:LeadingDesign}
-	\subsection{Drone Structures}
-		\subsubsection{Arm Configuration}
-			This is a filler paragraph
-
-		\subsubsection{Landing Legs}
-			This is a filler paragraph
-	
-		\subsubsection{Ice Recovery and Mobility Agent}
-			This is a filler paragraph
-
-	\subsection{Avionics}
-		\subsubsection{Flight Controller}
-			This is a filler paragraph
-
-		\subsubsection{Computer Vision}
-			This is a filler paragraph
-
-\section{Testing Campaign}\label{PL:Deployment:Testing}
-	\subsection{Structual Testing}
-		\subsubsection{Deployment Tests}
-			This is a filler paragraph
-
-		\subsubsection{Ice Retrieval and Mobility Agent Tests}
-			This is a filler paragraph
-
-	\subsection{Avionics Testings}
-		\subsubsection{Flight Controller Tests}
-			This is a filler paragraph
-
-		\subsubsection{Computer Vision Tests}
-			This is a filler paragraph
-
-
-
-
-

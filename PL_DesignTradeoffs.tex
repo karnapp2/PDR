@@ -54,11 +54,24 @@
 
 \section{Payload Structures}\label{PL:Tradeoffs:Structures}
 	\subsection{Landing Leg Design}
+		In order to create a safe and gentle touch down for the UAV before initiating task-specific maneuvers, a set of landing systems are needed. The team came up with two different approaches that result in two dissimilar ways to store the landing legs and each of which has its stability factor which will be analyzed in the following paragraphs alongside with risk analyses.
 		\subsubsection{Retractable Landing Mechanism}
-			This is a filler paragraph
+			The first landing mechanism uses the concept of a parallel four bar linkage. This format allows the legs to fold up as the arms of the drone fold up. (insert folding legs cad profile here). This design allows the team to maximize the utility of space inside the body tube. The parallel four bar linkage system allows the legs to be vertical at all times, including the pre-deployment period when the arms are folded in the vertical direction. This unfolding process can be seen in the images below.
+
+			INSERT IMAGES HERE
+
+			The sets of retractable landing mechanisms will be sized based on the overall vertical length of the A.R.M system while taking the stability factor into consideration. In order to prevent the chance of A.R.M system directly making unintended contact with the ground and suffer damage, the final separation distance between the legs is 281 mm which is more than three times that of the static legs which allows the UAV to have its desired stability upon landing. The team also decided to use twill weave carbon fiber as the material for landing legs due to its high tensile strength under extreme conditions and its lightweight. 
+
+			The maximum thickness of the carbon fiber legs is also selected so that its entirety is contained within the 6 inch boundary of the body tube. The joints’ mobility factor will also be taken into consideration and the team will conduct multiple testings to ensure its ease at retracting in various different conditions. 
+
 
 		\subsubsection{Static Landing Mechanism}
-			This is a filler paragraph
+			The pros and cons of a more conventional set of “static” legs were also analyzed. The static legs will have a length of 114.3 mm made of 3-D printed High-Density Polyethylene and will be installed with a set of four cone shaped landing pads at the root of the legs. The landing pads will have an optimal curvature with a radius of 5 mm and with the implementation of metal ball bearings, they will be able to rotate in all directions and adjust to all kinds of terrains. The team estimated the UAV mass with its full payload capacity to be 2.5 kg. Therefore, to have an overall safety factor of 300%, every connecting joint of the UAV shall be able to withstand an omnidirectional force of 12.25 N. 
+
+			A design based on the use of static landing legs will produce a few dimension constraints due to the size of the payload bay. In the current design, the avionics section occupies a planer area of 8665 mm^2. This provides a total separation distance of 93.08 mm between the static arms. Although this dimension seemed to provide enough stability for any commercial purpose UAVs, it does not satisfy the stability factor for the purpose of our mission design. In comparison to the distance mentioned in the above section provided by the unfolding landing legs, this design provides a distance that is more than three times less which increases the possibility of induced tipping. 
+		
+			Another downside to the static leg design is that in order for them to be safely stored within the rocket, they have to be placed within the nose cone alongside with the A.R.M system. Not only does this design take up a good portion of the very limited space the payload has in the rocket, but also induces possible damage during ascent due to the rocket’s vibrations.  
+		
 
 	\subsection{Ice Retrieval and Mobility Agent}
 		\subsubsection{Pin Joint Mechanism}

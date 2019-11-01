@@ -65,10 +65,10 @@
 
 	\subsection{Flight Controller}
 		\subsubsection{ArduPilot}
-			This is a filler paragraph
+			The ArduPilot APM, although revolutionary on its initial release, has several downfalls. The most severe of which is its lackluster 8-bit processor. It consists of two components, the main processor board and the IMU shield that can be attached on top. The APM’s framework is based on that of the Arduino Mega and is capable of tasks such as autopilot, autonomous stabilization and way-point based navigation.
 
 		\subsubsection{Pixhawk}
-			This is a filler paragraph
+			The Pixhawk is also a renowned flight controller. It contains a much more powerful 32-bit processor and a built-in IMU + Barometer. One of the benefits of the Pixhawk is its ability to interface with a companion computer, such as a Raspberry Pi. A setup like this would be ideal for the high computing power a computer vision navigation system would require.
 
 		\subsubsection{Navio2}
-			This is a filler paragraph
+			The Navio2 is slightly different from the Pixhawk and ArduPilot APM; it requires a Raspberry Pi to function. The Navio2 itself is just a shield containing high resolution sensors, a UART interface and a GNSS receiver that fits onto a Raspberry Pi. This combined system coalesces to become the flight controller. A set up like this removes the need to carry an extra companion computer in addition to the flight controller because the flight controller system itself has a high power, 64-bit, 1.5 GHz processor on the Raspberry Pi which can handle the processing needs for the computer vision system.

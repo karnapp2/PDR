@@ -122,6 +122,24 @@
 			It is easy to obtain the critical components of the design since worm gear packages are readily available in a wide range of sizes. Also, the design is very simplistic and easy to build. A major factor against the worm gear design is the cost of materials. Worm gears are harder to manufacture than round gears, and thus cost more. We decided against spending a large sum of money for a single mechanism. A critical aspect in the structural soundness of the design was identified in the region where the claw arms attached to the gears. The forces acting on the gears would have to be accounted for, and reinforcement of the region may offset the simplicity advantage of the overall design.
 			
 			INSERT IMAGE HERE.
+\begin{table}[]
+            \label{IRMA}
+            {\footnotesize
+            \caption{Risk Matrix for Ice Retrieval and Mobility Agent}
+            \centering
+            \begin{tabularx}{\linewidth}{XXXlXl}
+            \toprule
+            \textbf{Risk}                                            & \textbf{Cause}                                                                                                                 & \textbf{Impact}                                                                                                                           & \textbf{RBM}  & \textbf{Mitigation}                                                                                                                                                                                     & \textbf{RWM} \\
+            \midrule
+            Servo wiring fails & Wiring becomes disconnected or loose due to vibrations in the rocket & IRMA does not actuate or complete the mission & \cellcolor{orange!25} 1D & 1) Fasten wires securely and solder wires well \newline 2) Perform pull tests on wires & \cellcolor{green!25} 1E \\
+            Mechanism stops & Friction on the pins or between the nut and bolt & Claws don’t close all the way, thus never scooping any sample & \cellcolor{red!25} 1C & Lubricate IRMA & \cellcolor{green!25} 2E \\
+            Claws don’t seal sample & Misalignment of claws when scooping & Ice falls through claws, thus not obtaining any sample or little sample & \cellcolor{orange!25} 2D & Perform cyclic tests, run the mechanism for a long period of time & \cellcolor{green!25} 2E \\
+            IRMA breaks & Not enough material at weak points or material is not strong enough & No claw for the mission & \cellcolor{orange!25} 1D & 1) Perform pull tests and strength tests \newline 2) Use strong material and factor in a safety factor & \cellcolor{green!25} 1E \\
+            Software malfunction & Human Error in Code & Claw doesn’t open or close on command & \cellcolor{red!25} 2B & 1) Cycle power \newline 2) Simulate random test cases \newline 3) Severe debugging & \cellcolor{orange!25} 1D \\
+            \bottomrule
+            \end{tabularx}
+            }
+        \end{table}
 
 \section{Payload Avionics}\label{PL:Tradeoffs:Avionics}
 	\subsection{Computer Vision}

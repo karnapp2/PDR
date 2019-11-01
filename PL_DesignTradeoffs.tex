@@ -64,6 +64,8 @@
 		Neural networks have specific benefits and setbacks that need to be considered before choosing an approach to employ for computer vision. One useful benefit is that if the neural network is trained correctly, it can be extremely fast, and would be able to detect different objects accurately and reliably. On the other hand, a major setback to using a deep learning approach is the immense training time needed. The number of images needed to train the neural network to an adequate level is unknown, but could range from 1,000 to 100,000 comparison images, based on previous implementations.
 
 	\subsection{Flight Controller}
+		From the multitude of different flight controllers available that would suit the mission parameters, the team was able to narrow the list down to 3 choices. These flight controllers, the ArduPilot APM, the Pixhawk 4 and the Navio2, are all widely used by the UAV community. The team identified the factors that were most pertinent to the mission and weighted them by their importance. Ultimately, the flight controller in tandem with its companion computer would require the adequate processing power for the computer vision system and a high degree of reliability, which often varies depending upon software or physical design.
+
 		\subsubsection{ArduPilot}
 			The ArduPilot APM, although revolutionary on its initial release, has several downfalls. The most severe of which is its lackluster 8-bit processor. It consists of two components, the main processor board and the IMU shield that can be attached on top. The APM’s framework is based on that of the Arduino Mega and is capable of tasks such as autopilot, autonomous stabilization and way-point based navigation.
 

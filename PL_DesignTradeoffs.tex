@@ -59,6 +59,22 @@
 		The quick-release mechanism is similar to the cutter mechanism. It will require a motor or similar mechanical source to pull a pin. The advantage of this system is that it does not depend on the line being cut. This also allows the line to be made of almost any material, including options more durable than nylon that do not cut easily. However, the quick-release would need to be designed carefully to ensure that it is not accidentally triggered before intended. The risk of premature triggering of the release is significant, and factors heavily into the team’s consideration of the viability of this option. 
 	
 		The electric system is a viable option for burning through nylon string. This system has no moving parts, which corresponds to less points of failure. It is the most reliable option. However, it will could longer to burn through the string than it might take to execute the other options. Additionally, this system limits the material for the string to nylon. 
+		\begin{table}[H]
+    \label{UAV Release Mechanism}
+    {\footnotesize
+    \caption{Risk Matrix for UAV Release Mechanism}
+    \centering
+    \begin{tabularx}{\linewidth}{XXXlXl}
+    \toprule
+    \textbf{Risk}                                            & \textbf{Cause}                                                                                                                 & \textbf{Impact}                                                                                                                           & \textbf{RBM}  & \textbf{Mitigation}                                                                                                                                                                                     & \textbf{RWM} \\
+    \midrule
+    Winch line becomes tangled around rocket during deployment & 1) Wind blows UAV or open rocket off-track \newline 2) Winch gets caught in the motors during deployment & UAV is not success-fully deployed; recovery of rocket is possibly comprom-ised & \cellcolor{orange!25} 2C & 1) Conduct extensive testing to ensure that release of winch line has adequate area \newline 2) Ensure using redundant systems that UAV is stable during descent from rocket body & \cellcolor{orange!25} 2D \\
+    Winch line is not completely severed & 1) Electric system is incapable of burning through the nylon cable \newline 2) Environmental effects on the nylon cable \newline 3) Positioning of cord relative to UAV doesn’t allow contact between cord and electric system & UAV is not success-fully deployed & \cellcolor{red!25} 2A & 1) Conduct extensive testing with electric systems and nylon cords to ensure the electric system is capable of severing the nylon cable & \cellcolor{orange!25} 2D \\
+    Winch does not lower UAV from the rocket & 1) Battery that powers the winch mechanism fails 2) Winch line is not properly coiled prior to launch \newline 3) Winch line becomes tangled within the fairing \newline 4) Drone gets jammed due to guide rails. & UAV is not success-fully deployed & \cellcolor{red!25} 2B & 1) Ensure soundness of electrical circuit upon which the winch mechanism is dependent \newline 2) Practice coiling of the nylon cord extensively prior to launch \newline 3) Verify the integrity of the coiling of the nylon cord multiple times prior to launch \newline 4) Minimize moving parts within the fairing, especially within the path that the cable will travel along 5) Test the alignment of the guide rails and cycle test lowering of the UAV, properly lubricate the rails and fasten the rails to the proper constraints & \cellcolor{orange!25} 2C \\
+    \bottomrule
+    \end{tabularx}
+    }
+\end{table}
 	
 
 	\subsection{Nose Cone Jettison}
